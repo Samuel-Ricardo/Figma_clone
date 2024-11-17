@@ -1,5 +1,5 @@
 import { INFRA_REGISTRY } from './infra/infra.registry';
 
-export const APP_REGISTRY = {
+export const MODULE = {
   INFRA: INFRA_REGISTRY,
 };
