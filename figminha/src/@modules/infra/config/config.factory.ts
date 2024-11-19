@@ -10,9 +10,7 @@ export const CONFIG_FACTORY = {
   CONST: () => CONFIG_MODULE.get<CONSTS>(CONFIG_REGISTRY.CONST),
   LIVE_BLOCK: {
     API: {
-      KEY: CONFIG_MODULE.get<string | undefined>(
-        CONFIG_REGISTRY.LIVE_BLOCK.API.KEY,
-      ),
+      KEY: CONFIG_MODULE.get<string>(CONFIG_REGISTRY.LIVE_BLOCK.API.KEY),
     },
   },
 };

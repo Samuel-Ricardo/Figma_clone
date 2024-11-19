@@ -3,7 +3,7 @@ export const ENV = {
 
   LIVE_BLOCK: {
     API: {
-      KEY: process.env.LIVE_BLOCK_API_KEY,
+      KEY: process.env.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY,
     },
   },
 };
