@@ -1,4 +1,4 @@
-import { IPosition } from '../position.type';
+import { IPosition } from '../../position.type';
 
 export interface ICursorProps {
   color: string;
