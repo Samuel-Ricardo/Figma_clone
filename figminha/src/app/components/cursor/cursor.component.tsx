@@ -1,4 +1,4 @@
-import { ICursorProps } from '@/@types/props/cursor.type';
+import { ICursorProps } from '@/@types/props/cursor/cursor.type';
 import CursorSVG from '../../../../public/assets/CursorSVG';
 import { ChatBubble } from '../chat/bubble.component';
 
