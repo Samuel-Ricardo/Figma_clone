@@ -6,7 +6,7 @@ import { useCursorState } from '@/store/cursor/cursor.store';
 import { BubbleChatInput } from './bubble/input.compent';
 
 export const CursorChat = ({ cursor: { x, y } }: ICursorChatProps) => {
-  const state = useCursorState();
+  const { state } = useCursorState();
 
   return (
     <div
