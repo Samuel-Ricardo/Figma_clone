@@ -7,4 +7,6 @@ export interface ICursorStateStore {
   setState: (state: ICursorState) => void;
   setChatState: ({ message, previousMessage }: ICursorChatState) => void;
   setHiddenState: () => void;
+  setPressed(state: boolean): void;
+  setReactionSelectorState(): void;
 }
