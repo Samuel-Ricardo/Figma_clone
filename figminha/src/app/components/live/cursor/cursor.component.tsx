@@ -1,3 +1,5 @@
+'use client';
+
 import { ILiveCursorProps } from '@/@types/props/live/cursor.type';
 import { Cursor } from '../../cursor/cursor.component';
 import { MODULES } from '@/@modules/app.factory';
