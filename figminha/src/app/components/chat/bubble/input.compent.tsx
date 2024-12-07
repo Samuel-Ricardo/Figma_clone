@@ -1,3 +1,5 @@
+'use client';
+
 import { IBubbleChatInput } from '@/@types/props/chat/bubble/input.type';
 import CursorSVG from '../../../../../public/assets/CursorSVG';
 import { useCursorStateHandleByKey } from '@/hook/cursor/state/handle/by/key.hook';
@@ -7,7 +9,7 @@ export const BubbleChatInput = ({
   previousMessage,
   message,
 }: IBubbleChatInput) => {
-  const { handleKeyDown } = useCursorStateHandleByKey({
+  const { handleInputKeyDown } = useCursorStateHandleByKey({
     message,
   });
 
@@ -27,7 +29,7 @@ export const BubbleChatInput = ({
           className="z-10 w-60 border-none bg-transparent text-white placeholder-blue-300 outline-none"
           autoFocus
           onChange={handleTyping}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleInputKeyDown}
           placeholder={previousMessage ? '' : 'Say something…'}
           value={message || ''}
           maxLength={50}
