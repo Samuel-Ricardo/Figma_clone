@@ -18,7 +18,7 @@ export default defineConfig({
       // TODO: implement node event listeners here
     },
     supportFile: false,
-    baseUrl: env.APP_URL || 'http://localhost:3000',
+    baseUrl: env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
     specPattern: [
       'cypress/E2E/**/*.{cy,spec}.{js,jsx,ts,tsx}',
       'cypress/integration/**/*.{cy,spec}.{js,jsx,ts,tsx}',
@@ -26,6 +26,7 @@ export default defineConfig({
   },
 
   component: {
+    supportFile: false,
     devServer: {
       framework: 'next',
       bundler: 'webpack',
