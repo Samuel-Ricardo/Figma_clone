@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
 import './globals.css';
-import { Room } from './Room';
+import { LiveblocksRoomProvider } from '@/provider/liveblocks/room.provider';
 
 export const metadata: Metadata = {
   title: 'Figminha 🎨',
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.className} bg-primary-gray-200`}>
-        <Room>{children}</Room>
+        <LiveblocksRoomProvider>{children}</LiveblocksRoomProvider>
       </body>
     </html>
   );
