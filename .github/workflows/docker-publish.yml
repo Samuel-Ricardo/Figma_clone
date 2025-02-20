@@ -70,6 +70,16 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Define Environment Variables
+        env:
+          LIVE_BLOCK_PUBLIC_API_KEY: ${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        run: |
+          echo "LIVE_BLOCK_PUBLIC_API_KEY=${LIVE_BLOCK_PUBLIC_API_KEY}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}" >> $GITHUB_ENV
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
