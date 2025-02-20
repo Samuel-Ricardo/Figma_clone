@@ -46,11 +46,13 @@ jobs:
 
       - name: Construir imagem Docker
         run: |
+          cd ./figminha
           docker build -t $ACR_NAME/$IMAGE_NAME:${{ github.sha }} .
           docker tag $ACR_NAME/$IMAGE_NAME:${{ github.sha }} $ACR_NAME/$IMAGE_NAME:latest
 
       - name: Enviar imagem para o ACR
         run: |
+          cd ./figminha
           docker push $ACR_NAME/$IMAGE_NAME:${{ github.sha }}
           docker push $ACR_NAME/$IMAGE_NAME:latest
 
