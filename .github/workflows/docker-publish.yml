@@ -56,9 +56,6 @@ jobs:
           echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
         shell: bash
 
-      - name: Build do Next.js
-        run: cd ./figminha && npm run build
-
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v5.0.0
