@@ -48,16 +48,16 @@ jobs:
 
       - name: Create .env.local
         run: |
-          echo "#ONLY SERVER SIDE" > .env.local
-          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> .env.local
-          echo "" >> .env.local
-          echo "#CLIENT SIDE" >> .env.local
-          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> .env.local
-          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> .env.local
+          echo "#ONLY SERVER SIDE" > ./figminha/.env.local
+          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "" >> ./figminha/.env.local
+          echo "#CLIENT SIDE" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
         shell: bash
 
       - name: Build do Next.js
-        run: npm run build
+        run: cd ./figminha && npm run build
 
       - name: Build and push Docker image
         id: build-and-push
