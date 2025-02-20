@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: meuapp
+  IMAGE_NAME: figminha
   ACR_NAME: ${{ secrets.ACR_LOGIN_SERVER }}
 
 jobs:
@@ -27,13 +27,10 @@ jobs:
           node-version: 18
 
       - name: Instalar dependências
-        run: npm install
+        run: cd ./figminha && npm install
 
-      - name: Verificação estática de código (Lint)
-        run: npm run lint
-
-      - name: Rodar os testes
-        run: npm test
+      - name: Format, Lint, Test
+        run: cd ./figminha && npm run code:ci
 
   build-and-publish:
     name: Build e Publicação no ACR
