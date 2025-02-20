@@ -1,3 +1,9 @@
+import { Live } from './components/live/live.component';
+
 export default function Page() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <Live />
+    </div>
+  );
 }
