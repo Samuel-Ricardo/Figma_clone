@@ -52,7 +52,7 @@ jobs:
           echo "LIVE_BLOCK_PUBLIC_API_KEY=1" >> ./figminha/.env.local
           echo "" >> ./figminha/.env.local
           echo "#CLIENT SIDE" >> ./figminha/.env.local
-          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=1" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=pk_1" >> ./figminha/.env.local
           echo "NEXT_PUBLIC_APP_URL=http://localhost:2012" >> ./figminha/.env.local
 
       - name: Build and push Docker image
