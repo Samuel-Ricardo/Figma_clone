@@ -47,8 +47,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Create .env.local
-        with:
-          LIVE_BLOCK_PUBLIC_API_KEY: ${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}
         run: |
           echo "#ONLY SERVER SIDE" >> ./figminha/.env.local
           echo "LIVE_BLOCK_PUBLIC_API_KEY=1" >> ./figminha/.env.local
@@ -56,7 +54,6 @@ jobs:
           echo "#CLIENT SIDE" >> ./figminha/.env.local
           echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=1" >> ./figminha/.env.local
           echo "NEXT_PUBLIC_APP_URL=http://localhost:2012" >> ./figminha/.env.local
-        shell: bash
 
       - name: Build and push Docker image
         id: build-and-push
