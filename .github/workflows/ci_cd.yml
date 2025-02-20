@@ -27,7 +27,7 @@ jobs:
           node-version: 18
 
       - name: Instalar dependências
-        run: cd ./figminha && npm install
+        run: cd ./figminha && npm install --legacy-peer-deps
 
       - name: Format, Lint, Test
         run: cd ./figminha && npm run code:ci
