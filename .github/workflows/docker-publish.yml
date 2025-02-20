@@ -61,9 +61,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=$NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY
-            LIVE_BLOCK_PUBLIC_API_KEY=$LIVE_BLOCK_PUBLIC_API_KEY
-            NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+            NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ env.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}
+            LIVE_BLOCK_PUBLIC_API_KEY=${{ env.LIVE_BLOCK_PUBLIC_API_KEY }}
+            NEXT_PUBLIC_APP_URL=${{ env.NEXT_PUBLIC_APP_URL }}
 
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
