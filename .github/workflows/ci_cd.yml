@@ -44,6 +44,15 @@ jobs:
       - name: Login no Azure Container Registry (ACR)
         run: echo "${{ secrets.ACR_PASSWORD }}" | docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
 
+      - name: Create .env.local
+        run: |
+          echo "#ONLY SERVER SIDE" >> ./figminha/.env.local
+          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "" >> ./figminha/.env.local
+          echo "#CLIENT SIDE" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
+
       - name: Construir imagem Docker
         run: |
           cd ./figminha
