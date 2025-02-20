@@ -46,19 +46,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Create .env.local
-        run: |
-          echo "#ONLY SERVER SIDE" > ./figminha/.env.local
-          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ vars.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
-          echo "" >> ./figminha/.env.local
-          echo "#CLIENT SIDE" >> ./figminha/.env.local
-          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ vars.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
-          echo "NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
-        shell: bash
-
-      - name: Exibir .env.local (opcional)
-        run: cat ./figminha/.env.local
-
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v5.0.0
@@ -69,6 +56,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}
+            NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}
+            NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
 
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
