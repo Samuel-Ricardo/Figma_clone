@@ -35,15 +35,13 @@ jobs:
           echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
           echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
 
-      - name: Check .env.local
-        run: cat ./figminha/.env.local
-
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
+          context: ./figminha
           push: true
           tags: azcontainerregistrydemo.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}/figminha:${{ github.sha }}
-          file: ./figminha/Dockerfile.azure
+          file: Dockerfile.azure
 
   deploy:
     runs-on: ubuntu-latest
