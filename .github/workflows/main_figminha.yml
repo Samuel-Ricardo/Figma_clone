@@ -31,7 +31,7 @@ jobs:
         with:
           push: true
           tags: azcontainerregistrydemo.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}/figminha:${{ github.sha }}
-          file: ./figminha/Dockerfile
+          file: ./figminha/Dockerfile.azure
 
   deploy:
     runs-on: ubuntu-latest
