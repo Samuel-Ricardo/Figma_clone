@@ -6,9 +6,9 @@ WORKDIR /app
 COPY ./figminha/package.json ./figminha/package-lock.json ./ 
 RUN npm ci --include=dev --legacy-peer-deps
 
-
+#COPY . .
 COPY ./figminha .
-RUN cat .env.local && npm run build
+RUN ls && npm run build
 
 
 

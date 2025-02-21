@@ -35,6 +35,9 @@ jobs:
           echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
           echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
 
+      - name: Check .env.local
+        run: cat ./figminha/.env.local
+
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
