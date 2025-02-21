@@ -12,7 +12,9 @@ import Loader from '../../app/components/loader/loader.component';
 
 export function LiveblocksRoomProvider({ children }: { children: ReactNode }) {
   return (
-    <LiveblocksProvider publicApiKey={MODULES.INFRA.CONFIG.LIVE_BLOCK.API.KEY}>
+    <LiveblocksProvider
+      publicApiKey={MODULES.INFRA.CONFIG.LIVE_BLOCK.API.KEY || 'pk_1'}
+    >
       <RoomProvider
         id="my-room"
         initialPresence={{ cursor: null, cursorColor: null, editingText: null }}
