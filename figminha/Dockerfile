@@ -8,7 +8,7 @@ RUN npm ci --include=dev --legacy-peer-deps
 
 
 COPY . .
-RUN npm run build
+RUN ls && npm run build
 
 
 
