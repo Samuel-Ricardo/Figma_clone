@@ -26,6 +26,15 @@ jobs:
           username: ${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}
           password: ${{ secrets.AzureAppService_ContainerPassword_d1eaca884a9746aca87c79f3acf29803 }}
 
+      - name: Create .env.local
+        run: |
+          echo "#ONLY SERVER SIDE" >> ./figminha/.env.local
+          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "" >> ./figminha/.env.local
+          echo "#CLIENT SIDE" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
+
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
