@@ -8,7 +8,7 @@ RUN npm ci --include=dev --legacy-peer-deps
 
 
 COPY ./figminha .
-RUN npm run build
+RUN cat .env.local && npm run build
 
 
 
