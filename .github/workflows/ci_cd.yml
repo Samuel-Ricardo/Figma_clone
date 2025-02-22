@@ -1,0 +1,87 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: figminha
+  ACR_NAME: ${{ secrets.ACR_LOGIN_SERVER }}
+
+jobs:
+  lint-and-test:
+    name: Verificar Código e Testar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Instalar dependências
+        run: cd ./figminha && npm install --legacy-peer-deps
+
+      - name: Format, Lint, Test
+        run: cd ./figminha && npm run code:ci
+
+  build-and-publish:
+    name: Build e Publicação no ACR
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Login no Azure Container Registry (ACR)
+        run: echo "${{ secrets.ACR_PASSWORD }}" | docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
+
+      - name: Create .env.local
+        run: |
+          echo "#ONLY SERVER SIDE" >> ./figminha/.env.local
+          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "" >> ./figminha/.env.local
+          echo "#CLIENT SIDE" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
+
+      - name: Construir imagem Docker
+        run: |
+          cd ./figminha
+          docker build -t $ACR_NAME/$IMAGE_NAME:${{ github.sha }} .
+          docker tag $ACR_NAME/$IMAGE_NAME:${{ github.sha }} $ACR_NAME/$IMAGE_NAME:latest
+
+      - name: Enviar imagem para o ACR
+        run: |
+          cd ./figminha
+          docker push $ACR_NAME/$IMAGE_NAME:${{ github.sha }}
+          docker push $ACR_NAME/$IMAGE_NAME:latest
+
+  #deploy:
+  #name: Deploy no Azure App Service
+  #runs-on: ubuntu-latest
+  #needs: build-and-publish
+  #permissions:
+  #id-token: write
+
+  #steps:
+  #- name: Login no Azure
+  #uses: azure/login@v1
+  #with:
+  #client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  #- name: Fazer deploy no Azure App Service
+  #uses: azure/webapps-deploy@v3
+  #with:
+  #app-name: ${{ secrets.AZURE_APP_SERVICE_NAME }}
+  #images: ${{ secrets.ACR_LOGIN_SERVER }}/$IMAGE_NAME:${{ github.sha }}

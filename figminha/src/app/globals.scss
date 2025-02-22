@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './global.module.scss';
 @import '@liveblocks/react-comments/styles.css';
 
 body {
