@@ -1,61 +1,61 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - figminha
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Log in to registry
-        uses: docker/login-action@v2
-        with:
-          registry: https://azcontainerregistrydemo.azurecr.io/
-          username: ${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}
-          password: ${{ secrets.AzureAppService_ContainerPassword_d1eaca884a9746aca87c79f3acf29803 }}
-
-      - name: Create .env.local
-        run: |
-          echo "#ONLY SERVER SIDE" >> ./figminha/.env.local
-          echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
-          echo "" >> ./figminha/.env.local
-          echo "#CLIENT SIDE" >> ./figminha/.env.local
-          echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
-          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
-
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: azcontainerregistrydemo.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}/figminha:${{ github.sha }}
-          file: ./figminha/Dockerfile.azure
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: "production"
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: "figminha"
-          slot-name: "production"
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_cd6a6294b4eb42278908c58e8ba440c4 }}
-          images: "azcontainerregistrydemo.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}/figminha:${{ github.sha }}"
+#
+# name: Build and deploy container app to Azure Web App - figminha
+#
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#
+# jobs:
+#   build:
+#     runs-on: "ubuntu-latest"
+#
+#     steps:
+#       - uses: actions/checkout@v2
+#
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v2
+#
+#       - name: Log in to registry
+#         uses: docker/login-action@v2
+#         with:
+#           registry: https://azcontainerregistrydemo.azurecr.io/
+#           username: ${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}
+#           password: ${{ secrets.AzureAppService_ContainerPassword_d1eaca884a9746aca87c79f3acf29803 }}
+#
+#       - name: Create .env.local
+#         run: |
+#           echo "#ONLY SERVER SIDE" >> ./figminha/.env.local
+#           echo "LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+#           echo "" >> ./figminha/.env.local
+#           echo "#CLIENT SIDE" >> ./figminha/.env.local
+#           echo "NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_LIVE_BLOCK_PUBLIC_API_KEY }}" >> ./figminha/.env.local
+#           echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> ./figminha/.env.local
+#
+#       - name: Build and push container image to registry
+#         uses: docker/build-push-action@v3
+#         with:
+#           push: true
+#           tags: azcontainerregistrydemo.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}/figminha:${{ github.sha }}
+#           file: ./figminha/Dockerfile.azure
+#
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     environment:
+#       name: "production"
+#       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+#
+#     steps:
+#       - name: Deploy to Azure Web App
+#         id: deploy-to-webapp
+#         uses: azure/webapps-deploy@v2
+#         with:
+#           app-name: "figminha"
+#           slot-name: "production"
+#           publish-profile: ${{ secrets.AzureAppService_PublishProfile_cd6a6294b4eb42278908c58e8ba440c4 }}
+#           images: "azcontainerregistrydemo.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2a63b666a137466cbc01e41b0180d185 }}/figminha:${{ github.sha }}"
 
