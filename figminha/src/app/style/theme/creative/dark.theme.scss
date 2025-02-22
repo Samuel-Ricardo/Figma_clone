@@ -1,0 +1,27 @@
+.coffe-espresso-theme {
+  $primary-color: #ba6408;
+  $secondary-color: #aa371d;
+  $tertiary-color: #e1ecda;
+  $background-color: #422206;
+  $accent-color: #ebd9cc;
+
+  --primary-color: #ba6408;
+  --secondary-color: #aa371d;
+  --tertiary-color: #e1ecda;
+  --background-color: #422206;
+  --accent-color: #ebd9cc;
+}
+
+[data-theme='coffe-espresso'] {
+  $primary-color: #ba6408;
+  $secondary-color: #aa371d;
+  $tertiary-color: #e1ecda;
+  $background-color: #422206;
+  $accent-color: #ebd9cc;
+
+  --primary-color: #ba6408;
+  --secondary-color: #aa371d;
+  --tertiary-color: #e1ecda;
+  --background-color: #422206;
+  --accent-color: #ebd9cc;
+}
