@@ -1,3 +1,5 @@
 export const STORAGE = {
-  THEME: 'theme',
+  KEY: {
+    THEME: 'theme',
+  },
 };
