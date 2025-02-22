@@ -1,0 +1,14 @@
+@import '../../../globals.scss';
+
+.reaction-selector--container {
+  @apply absolute;
+  @apply bottom-20;
+  @apply left-0;
+  @apply right-0;
+  @apply mx-auto;
+  @apply w-fit;
+  @apply transform;
+  @apply rounded-full;
+  @apply bg-white;
+  @apply px-2;
+}
