@@ -1,0 +1,16 @@
+.reaction-selction--button {
+  @apply transform;
+  @apply select-none;
+  @apply p-2;
+  @apply text-xl;
+  @apply transition-transform;
+
+  :hover {
+    @apply scale-150;
+  }
+
+  :focus {
+    @apply scale-150;
+    @apply outline-none;
+  }
+}
