@@ -1,0 +1,13 @@
+@import '../../../globals.scss';
+
+.floating-reaction--container {
+  @apply pointer-events-none;
+  @apply absolute;
+  @apply select-none;
+}
+
+.floating-reaction--reaction {
+  @apply -translate-x-1/2;
+  @apply -translate-y-1/2;
+  @apply transform;
+}
