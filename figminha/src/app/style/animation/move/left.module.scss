@@ -1,0 +1,29 @@
+@keyframes left-right-lg {
+  from {
+    transform: translate(0px, 0px);
+  }
+
+  to {
+    transform: translate(100px, 0px);
+  }
+}
+
+@keyframes left-right-md {
+  from {
+    transform: translate(0px, 0px);
+  }
+
+  to {
+    transform: translate(50px, 0px);
+  }
+}
+
+@keyframes -left-right-md {
+  from {
+    transform: translate(0px, 0px);
+  }
+
+  to {
+    transform: translate(-50px, 0px);
+  }
+}
