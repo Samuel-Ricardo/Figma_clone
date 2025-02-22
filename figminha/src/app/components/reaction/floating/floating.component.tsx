@@ -1,7 +1,7 @@
 import './floating.style.scss';
 import style from './floating.animation.module.scss';
 
-import { IFloatingReactionProps } from '@/@types/props/chat/reaction.type';
+import { IFloatingReactionProps } from '@/@types/props/reaction/floating/reaction.type';
 
 export const FloatingReaction = ({
   positition: { x, y },
