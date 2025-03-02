@@ -1,6 +1,7 @@
+import '@liveblocks/react-comments/styles.css';
 import type { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
-import './globals.css';
+import './globals.scss';
 import { LiveblocksRoomProvider } from '@/provider/liveblocks/room.provider';
 import { ThemeProvider } from '@/provider/theme/theme.provider';
 
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.className} bg-primary-gray-200`}>
+      <body className={`${workSans.className}`}>
         <ThemeProvider />
         <LiveblocksRoomProvider>{children}</LiveblocksRoomProvider>
       </body>

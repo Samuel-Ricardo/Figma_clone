@@ -8,12 +8,14 @@ import { FONT_SIZE_OPTIONS } from './options/font/size.const';
 import { FONT_WEIGHT_OPTIONS } from './options/font/weight.const';
 import { SHORTCUT } from './shortcut.const';
 import { STORAGE } from './storage/storage.const';
+import { REACTIONS } from './reaction/reaction.const';
 
 export const CONST = {
   COLORS,
   SHAPE_ELEMENTS,
   SHORTCUT,
   STORAGE,
+  REACTIONS,
 
   NAV: {
     ELEMENT: {

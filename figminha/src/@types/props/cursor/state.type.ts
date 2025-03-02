@@ -1,4 +1,5 @@
 import { CursorMode } from '@/@types/props/cursor/mode.type';
+import { Reaction } from '../reaction/reaction.type';
 
 export type ICursorState =
   | {
@@ -14,6 +15,6 @@ export type ICursorState =
     }
   | {
       mode: CursorMode.REACTION;
-      reaction: string;
+      reaction: Reaction;
       isPressed: boolean;
     };

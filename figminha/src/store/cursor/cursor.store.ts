@@ -1,6 +1,7 @@
 import {
   CHAT,
   HIDDEN,
+  REACTION,
   REACTION_SELECTOR,
 } from '@/@types/props/cursor/mode.type';
 import { ICursorState } from '@/@types/props/cursor/state.type';
@@ -28,7 +29,17 @@ export const useCursorState = create<ICursorStateStore>(set => ({
       },
     })),
   setHiddenState: () => set(state => ({ ...state, state: { mode: HIDDEN } })),
-  setPressed: (isPressed: boolean) => set(state => ({ ...state, isPressed })),
+  setPressed: (isPressed: boolean) =>
+    set(state => ({ ...state, state: { ...state.state, isPressed } })),
   setReactionSelectorState: () =>
     set(state => ({ ...state, state: { mode: REACTION_SELECTOR } })),
+  setReactionState: ({ reaction, isPressed = false }) =>
+    set(state => ({
+      ...state,
+      state: {
+        mode: REACTION,
+        reaction,
+        isPressed,
+      },
+    })),
 }));
