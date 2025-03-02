@@ -1,7 +1,8 @@
 import { IIconElement } from '@/@types/element/icon.type';
 import { SHAPE_ELEMENTS } from '../shape/elements.const';
+import { IElement } from '@/@types/store/canvas/element/active.type';
 
-export const NAV_ELEMENTS: IIconElement[] = [
+export const NAV_ELEMENTS: IIconElement[] | IElement[] = [
   {
     icon: '/assets/select.svg',
     name: 'Select',
