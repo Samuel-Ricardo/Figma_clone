@@ -2,13 +2,15 @@
 
 .reaction-selector--container {
   @apply absolute;
-  @apply bottom-20;
-  @apply left-0;
-  @apply right-0;
-  @apply mx-auto;
-  @apply w-fit;
+  @apply top-4;
+  @apply left-4;
+  @apply grid;
+  @apply grid-cols-4;
+  @apply gap-2;
   @apply transform;
-  @apply rounded-full;
+  @apply rounded-xl;
   @apply bg-white;
   @apply px-2;
+
+  @apply cursor-pointer;
 }
