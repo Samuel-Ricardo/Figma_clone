@@ -1,0 +1,12 @@
+@import '../../globals.scss';
+
+#navbar--container {
+  @apply flex;
+  @apply select-none;
+  @apply items-center;
+  @apply justify-between;
+  @apply gap-4;
+  @apply bg-black;
+  @apply px-5;
+  @apply text-white;
+}
