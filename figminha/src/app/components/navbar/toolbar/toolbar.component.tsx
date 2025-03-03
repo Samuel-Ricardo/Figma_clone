@@ -1,5 +1,7 @@
 'use client';
 
+import './toolbar.style.scss';
+
 import { MODULES } from '@/@modules/app.factory';
 import { IElement } from '@/@types/store/canvas/element/active.type';
 import { useActiveElement } from '@/store/canvas/element/active.store';
