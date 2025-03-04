@@ -1,0 +1,33 @@
+@import '../../../globals.scss';
+
+#right-sidebar--container {
+  @apply flex;
+  @apply flex-col;
+  @apply border-t;
+  @apply border-gray-200;
+  @apply bg-black;
+  @apply text-gray-300;
+  @apply min-w-[227px];
+  @apply sticky;
+  @apply right-0;
+  @apply h-full;
+  @apply "max-sm:hidden";
+  @apply select-none;
+
+  h3 {
+    @apply px-5;
+    @apply pt-4;
+    @apply text-xs;
+    @apply uppercase;
+  }
+
+  span {
+    @apply text-xs;
+    @apply text-gray-300;
+    @apply mt-3;
+    @apply px-5;
+    @apply border-b;
+    @apply border-gray-200;
+    @apply pb-4;
+  }
+}
