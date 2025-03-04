@@ -14,6 +14,9 @@ import { REACTION, REACTION_SELECTOR } from '@/@types/props/cursor/mode.type';
 import { ReactionSelector } from '../reaction/selector/selector.component';
 import { Cursor } from '../cursor/cursor.component';
 import { useReactionStartup } from '@/hook/reaction/startup.hook';
+import { ContextMenu } from '../context/menu/menu.component';
+import { ContextMenuTrigger } from '../context/menu/trigger/trigger.component';
+import { ContextMenuContent } from '@radix-ui/react-context-menu';
 
 export const Live = () => {
   const others = useOthers();
@@ -35,34 +38,43 @@ export const Live = () => {
 
   useReactionStartup();
   return (
-    <div
-      className="bg-transparent h-[100vh] w-full flex justify-center items-center text-center border-5 border-green-500"
-      onPointerEnter={handlePointerEnter}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-    >
-      <h1 className="text-2xl text-black italic">Hello World</h1>
+    <ContextMenu>
+      <ContextMenuTrigger
+        id="context-menu"
+        className="bg-transparent h-[100vh] w-full flex justify-center items-center text-center border-5 border-green-500"
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
+        {cursor && (
+          <Cursor color="black" position={{ x: cursor.x, y: cursor.y }} />
+        )}
 
-      {cursor && (
-        <Cursor color="black" position={{ x: cursor.x, y: cursor.y }} />
-      )}
+        <canvas id="canvas-board" />
 
-      {reactions.map(reaction => (
-        <FloatingReaction
-          key={reaction.timestamp}
-          reaction={reaction.reaction}
-          timestamp={reaction.timestamp}
-          positition={reaction.position}
-        />
-      ))}
+        {reactions.map(reaction => (
+          <FloatingReaction
+            key={reaction.timestamp}
+            reaction={reaction.reaction}
+            timestamp={reaction.timestamp}
+            positition={reaction.position}
+          />
+        ))}
 
-      {cursor && <CursorChat cursor={cursor} />}
+        {cursor && <CursorChat cursor={cursor} />}
 
-      {(state.mode === REACTION_SELECTOR || state.mode === REACTION) &&
-        cursor && <ReactionSelector />}
+        {(state.mode === REACTION_SELECTOR || state.mode === REACTION) &&
+          cursor && <ReactionSelector />}
 
-      <LiveCursors others={others} />
-    </div>
+        <LiveCursors others={others} />
+      </ContextMenuTrigger>
+
+      <ContextMenuContent className="right-menu-content">
+        : )
+      </ContextMenuContent>
+
+      <ContextMenuContent />
+    </ContextMenu>
   );
 };
 
