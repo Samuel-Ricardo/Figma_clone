@@ -17,6 +17,7 @@ import { useReactionStartup } from '@/hook/reaction/startup.hook';
 import { ContextMenu } from '../context/menu/menu.component';
 import { ContextMenuTrigger } from '../context/menu/trigger/trigger.component';
 import { ContextMenuContent } from '@radix-ui/react-context-menu';
+import { useCanvasStore } from '@/store/canvas/canvas.store';
 
 export const Live = () => {
   const others = useOthers();
@@ -25,6 +26,7 @@ export const Live = () => {
 
   const { reactions } = useReactionState();
   const { state } = useCursorState();
+  const { canvasRef } = useCanvasStore();
 
   const { handlePointerLeave, handlePointerMove, handlePointerEnter } =
     useCursorPointerHandler();
@@ -50,7 +52,7 @@ export const Live = () => {
           <Cursor color="black" position={{ x: cursor.x, y: cursor.y }} />
         )}
 
-        <canvas id="canvas-board" />
+        <canvas id="canvas-board" ref={canvasRef} />
 
         {reactions.map(reaction => (
           <FloatingReaction
