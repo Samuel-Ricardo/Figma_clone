@@ -7,11 +7,11 @@
   @apply border-gray-200;
   @apply bg-black;
   @apply text-gray-300;
+  @apply w-fit;
   @apply min-w-[227px];
   @apply sticky;
   @apply left-0;
   @apply h-full;
-  @apply max-sm:hidden;
   @apply select-none;
   @apply overflow-y-auto;
   @apply pb-20;
