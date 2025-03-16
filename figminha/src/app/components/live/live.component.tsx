@@ -10,14 +10,18 @@ import { useMyPresenceHandler } from '@/hook/presence.hook';
 import { FloatingReaction } from '../reaction/floating/floating.component';
 import { useReactionState } from '@/store/reaction/reaction.store';
 import { useCursorState } from '@/store/cursor/cursor.store';
-import { REACTION, REACTION_SELECTOR } from '@/@types/props/cursor/mode.type';
+import {
+  CHAT,
+  REACTION,
+  REACTION_SELECTOR,
+} from '@/@types/props/cursor/mode.type';
 import { ReactionSelector } from '../reaction/selector/selector.component';
 import { Cursor } from '../cursor/cursor.component';
 import { useReactionStartup } from '@/hook/reaction/startup.hook';
 import { ContextMenu } from '../context/menu/menu.component';
 import { ContextMenuTrigger } from '../context/menu/trigger/trigger.component';
-import { ContextMenuContent } from '@radix-ui/react-context-menu';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
+import { Shortcuts } from './shortcuts/shortcuts.component';
 
 export const Live = () => {
   const others = useOthers();
@@ -42,8 +46,11 @@ export const Live = () => {
   return (
     <ContextMenu>
       <ContextMenuTrigger
-        id="context-menu"
-        className="bg-transparent h-[100vh] w-full flex justify-center items-center text-center border-5 border-green-500"
+        id="canvas"
+        style={{
+          cursor: state.mode === CHAT ? 'none' : 'auto',
+        }}
+        className="relative flex h-full w-full flex-1 items-center justify-center"
         onPointerEnter={handlePointerEnter}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
@@ -71,11 +78,7 @@ export const Live = () => {
         <LiveCursors others={others} />
       </ContextMenuTrigger>
 
-      <ContextMenuContent className="right-menu-content">
-        : )
-      </ContextMenuContent>
-
-      <ContextMenuContent />
+      <Shortcuts />
     </ContextMenu>
   );
 };
