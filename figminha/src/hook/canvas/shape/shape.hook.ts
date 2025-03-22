@@ -17,6 +17,17 @@ export const useShape = () => {
     return canvasObjects.size === 0;
   }, []);
 
+  const syncShapeInStorage = useMutation(({ storage }, object) => {
+    if (!object) return;
+    const { objectId } = object;
+
+    const shapeData = object.toJSON();
+    shapeData.objectId = objectId;
+
+    const canvasObjects = storage.get('canvasObjects');
+    canvasObjects.set(objectId, shapeData);
+  }, []);
+
   return {
     delete: {
       shape: deleteShapeFromStorage,
