@@ -1,6 +1,6 @@
 export interface IActiveElementStore {
   element?: IElement | null;
-  imageInputRef?: React.RefObject<HTMLInputElement> | null;
+  attributes?: IElementAttributes | null;
 
   isActive: (
     value: string | Array<IElement>,
@@ -8,14 +8,22 @@ export interface IActiveElementStore {
   ) => boolean;
 
   setElement: (element: IElement) => void;
-  setImageInputRef: (imageInputRef: React.RefObject<HTMLInputElement>) => void;
 
   clearElement: () => void;
-  clearImageInputRef: () => void;
 }
 
 export interface IElement {
   name: string;
   value: string;
   icon: string;
+}
+
+export interface IElementAttributes {
+  width: string;
+  height: string;
+  fontSize: string;
+  fontFamily: string;
+  fontWeight: string;
+  fill: string;
+  stroke: string;
 }
