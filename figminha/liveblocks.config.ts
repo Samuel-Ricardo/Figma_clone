@@ -1,5 +1,13 @@
 /* eslint-disable */
 
+import { ENV } from '@/@modules/infra/config/env/env.config';
+import { Presence } from '@/@types/props/live/presence.type';
+import { RoomEvent } from '@/@types/props/live/room/event.type';
+import { ThreadMetadata } from '@/@types/props/live/thread/metadata.type';
+import { UserMeta } from '@/@types/props/live/user/meta.type';
+import { createClient, LiveMap } from '@liveblocks/client';
+import { createRoomContext } from '@liveblocks/react';
+
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
 declare global {
@@ -14,6 +22,7 @@ declare global {
     Storage: {
       // Example, a conflict-free list
       // animals: LiveList<string>;
+      canvasObjects: LiveMap<string, any>;
     };
 
     // Custom user info set when authenticating with a secret key
@@ -37,6 +46,11 @@ declare global {
       // Example, attaching coordinates to a thread
       // x: number;
       // y: number;
+      resolved: boolean;
+      zIndex: number;
+      time?: number;
+      x: number;
+      y: number;
     };
 
     // Custom room info set with resolveRoomsInfo, for useRoomInfo
@@ -49,3 +63,46 @@ declare global {
 }
 
 export {};
+
+const client = createClient({
+  throttle: 16,
+  publicApiKey: ENV.LIVE_BLOCK.API.KEY!,
+});
+
+export const {
+  suspense: {
+    RoomProvider,
+    useRoom,
+    useMyPresence,
+    useUpdateMyPresence,
+    useSelf,
+    useOthers,
+    useOthersMapped,
+    useOthersConnectionIds,
+    useOther,
+    useBroadcastEvent,
+    useEventListener,
+    useErrorListener,
+    useStorage,
+    useBatch,
+    useHistory,
+    useUndo,
+    useRedo,
+    useCanUndo,
+    useCanRedo,
+    useMutation,
+    useStatus,
+    useLostConnectionListener,
+    useThreads,
+    useUser,
+    useCreateThread,
+    useEditThreadMetadata,
+    useCreateComment,
+    useEditComment,
+    useDeleteComment,
+    useAddReaction,
+    useRemoveReaction,
+  },
+} = createRoomContext<Presence, Storage, UserMeta, RoomEvent, ThreadMetadata>(
+  client,
+);
