@@ -28,4 +28,40 @@ export const useActiveElement = () => {
     imageInputRef?.current?.click();
     stopDrawn();
   }, [imageInputRef, stopDrawn]);
+
+  const handleActiveElement = useCallback(
+    (element: IElement) => {
+      setElement(element);
+
+      switch (element.value) {
+        case 'reset':
+          resetElement();
+          break;
+
+        case 'delete':
+          deleteElement();
+          break;
+
+        case 'image':
+          initImageUpload();
+          break;
+
+        case 'comments':
+          break;
+
+        default:
+          setSelectedShapeRef(element.value);
+          break;
+      }
+    },
+    [
+      setElement,
+      resetElement,
+      deleteElement,
+      initImageUpload,
+      setSelectedShapeRef,
+    ],
+  );
+
+  return { handleActiveElement };
 };
