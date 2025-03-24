@@ -20,4 +20,38 @@ export const useCanvasMovements = () => {
 
   const { setupTarget, isTargetTheActiveSelection, isTargetTheSelectedShape } =
     useShapeTarget();
+
+  const handleCanvasMouseDown = useCallback(
+    ({ options }: ICanvasMouseDown) => {
+      if (!fabricRef?.current) return;
+
+      const pointer = fabricRef.current.getPointer(options);
+      const target = fabricRef.current.findTarget(options);
+
+      stopDrawn();
+      if (selectedShapeRef === 'freeform') return startDrawn();
+
+      if (
+        isTargetTheSelectedShape(target) ||
+        isTargetTheActiveSelection(target)
+      ) {
+        setupTarget(target!);
+      } else {
+        newShapeFromPoint(pointer);
+      }
+
+      if (shapeRef?.current) fabricRef.current.add(shapeRef.current);
+    },
+    [
+      fabricRef,
+      newShapeFromPoint,
+      setupTarget,
+      selectedShapeRef,
+      shapeRef,
+      stopDrawn,
+      startDrawn,
+      isTargetTheSelectedShape,
+      isTargetTheActiveSelection,
+    ],
+  );
 };
