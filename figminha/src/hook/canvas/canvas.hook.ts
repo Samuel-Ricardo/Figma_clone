@@ -36,4 +36,24 @@ export const useCanvas = () => {
     if (fabricRef?.current?.freeDrawingBrush)
       fabricRef.current.freeDrawingBrush.width = 5;
   };
+
+  const initializeCanvas = useCallback(() => {
+    if (!canvasRef?.current) return;
+    const canvasElement = document.getElementById(
+      'canvas-board',
+    ) as HTMLCanvasElement;
+    if (!canvasElement) return;
+
+    const canvas = new Canvas(canvasRef.current, {
+      width: canvasElement.width,
+      height: canvasElement.height,
+    });
+
+    if (fabricRef?.current) fabricRef.current = canvas;
+    //setFabricRef(fabricRef);
+
+    return canvas;
+  }, [canvasRef, fabricRef]);
+
+  return { deleteElementHandler, stopDrawn, startDrawn, initializeCanvas };
 };
