@@ -124,4 +124,17 @@ export const useCanvasMovements = () => {
 
     if (!fabricRef?.current?.isDrawingMode) setTimeout(resetDefault, 700);
   }, [fabricRef, resetDefault, setSelectedShapeRef, shapeRef, activeObjectRef]);
+
+  const handleCanvasMouseUp = useCallback(() => {
+    if (selectedShapeRef === 'freeform') return;
+
+    syncShapeInStorage(shapeRef?.current);
+    resetAll();
+  }, [resetAll, selectedShapeRef, shapeRef, syncShapeInStorage]);
+
+  return {
+    handleCanvasMouseDown,
+    handleCanvaseMouseMove,
+    handleCanvasMouseUp,
+  };
 };
