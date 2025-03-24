@@ -116,4 +116,12 @@ export const useCanvasMovements = () => {
       syncShapeInStorage,
     ],
   );
+
+  const resetAll = useCallback(() => {
+    shapeRef!.current = null;
+    activeObjectRef!.current = null;
+    setSelectedShapeRef(null);
+
+    if (!fabricRef?.current?.isDrawingMode) setTimeout(resetDefault, 700);
+  }, [fabricRef, resetDefault, setSelectedShapeRef, shapeRef, activeObjectRef]);
 };
