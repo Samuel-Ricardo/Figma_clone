@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint */
-
 import { useActiveElementStore } from '@/store/canvas/element/active.store';
 import { useCallback } from 'react';
 import { useShape } from '../shape/shape.hook';
 import { useCanvas } from '../canvas.hook';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
+import { IElement } from '@/@types/store/canvas/element/active.type';
 import { useShapeStore } from '@/store/canvas/shape/shape.store';
 
 export const useActiveElement = () => {
@@ -20,5 +19,8 @@ export const useActiveElement = () => {
     resetDefault();
   }, [deleteAllShapes, clearElement, resetDefault]);
 
-  return {};
+  const deleteElement = useCallback(() => {
+    deleteElementHandler();
+    resetDefault();
+  }, [deleteElementHandler, resetDefault]);
 };
