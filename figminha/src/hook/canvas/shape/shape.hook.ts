@@ -29,12 +29,8 @@ export const useShape = () => {
   }, []);
 
   return {
-    delete: {
-      shape: deleteShapeFromStorage,
-      all: deleteAllShapes,
-    },
-    sync: {
-      shape: syncShapeInStorage,
-    },
+    deleteShapeFromStorage,
+    deleteAllShapes,
+    syncShapeInStorage,
   };
 };
