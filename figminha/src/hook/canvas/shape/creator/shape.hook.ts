@@ -40,4 +40,16 @@ export const useShapeCreator = () => {
       }) as ICustomFabricObject,
     [],
   );
+
+  const createCircle = useCallback(
+    ({ pointer: { x, y } }: IShapeFormCreator) =>
+      new Circle({
+        left: x,
+        top: y,
+        radius: 100,
+        fill: '#aabbcc',
+        objectId: uuidV4(),
+      }) as ICustomFabricObject,
+    [],
+  );
 };
