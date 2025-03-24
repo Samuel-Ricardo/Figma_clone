@@ -76,4 +76,33 @@ export const useShapeCreator = () => {
       }),
     [],
   );
+
+  const createShape = useCallback(
+    ({ type, pointer }: IShapeCreator) => {
+      switch (type) {
+        case 'rectangle':
+          return createRectangle({ pointer });
+        case 'triangle':
+          return createTriangle({ pointer });
+        case 'circle':
+          return createCircle({ pointer });
+        case 'line':
+          return createLine({ pointer });
+        case 'text':
+          return createText({ pointer });
+        case 'freeform':
+          return startDrawn();
+        default:
+          return null;
+      }
+    },
+    [
+      createRectangle,
+      createTriangle,
+      createCircle,
+      createLine,
+      createText,
+      startDrawn,
+    ],
+  );
 };
