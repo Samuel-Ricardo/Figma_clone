@@ -20,4 +20,19 @@ export const useShapeTarget = () => {
       target && target.type === 'activeSelection',
     [],
   );
+
+  const setupTarget = useCallback(
+    (target: FabricObject) => {
+      stopDrawn();
+      fabricRef?.current?.setActiveObject(target);
+      target.setCoords();
+    },
+    [stopDrawn, fabricRef],
+  );
+
+  return {
+    isTargetTheSelectedShape,
+    isTargetTheActiveSelection,
+    setupTarget,
+  };
 };
