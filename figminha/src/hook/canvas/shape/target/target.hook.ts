@@ -14,4 +14,10 @@ export const useShapeTarget = () => {
       target && target.type === selectedShapeRef,
     [selectedShapeRef],
   );
+
+  const isTargetTheActiveSelection = useCallback(
+    (target: FabricObject | undefined) =>
+      target && target.type === 'activeSelection',
+    [],
+  );
 };
