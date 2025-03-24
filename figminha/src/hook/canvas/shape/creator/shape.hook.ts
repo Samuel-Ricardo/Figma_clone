@@ -52,4 +52,14 @@ export const useShapeCreator = () => {
       }) as ICustomFabricObject,
     [],
   );
+
+  const createLine = useCallback(
+    ({ pointer: { x, y } }: IShapeFormCreator) =>
+      new Line([x, y, x + 100, y + 100], {
+        objectId: uuidV4(),
+        stroke: 'aabbcc',
+        strokeWidth: 2,
+      }) as ICustomFabricObject,
+    [],
+  );
 };
