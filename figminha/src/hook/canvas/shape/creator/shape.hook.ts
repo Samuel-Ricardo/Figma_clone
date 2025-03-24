@@ -27,4 +27,17 @@ export const useShapeCreator = () => {
       }) as ICustomFabricObject,
     [],
   );
+
+  const createTriangle = useCallback(
+    ({ pointer: { x, y } }: IShapeFormCreator) =>
+      new Triangle({
+        left: x,
+        top: y,
+        width: 100,
+        height: 100,
+        fill: '#aabbcc',
+        objectId: uuidV4(),
+      }) as ICustomFabricObject,
+    [],
+  );
 };
