@@ -10,4 +10,18 @@ export const useCanvas = () => {
   const { fabricRef } = useFabricState();
   const { canvasRef } = useCanvasStore();
   const { stopDrawing, startDrawing } = useCanvasStore();
+
+  const deleteElementHandler = useCallback(() => {
+    const activeObjects = fabricRef?.current?.getObjects();
+    if (!activeObjects || activeObjects.length <= 0) return;
+
+    activeObjects.forEach((obj: ICustomFabricObject) => {
+      if (!obj.objectId) return;
+      fabricRef?.current?.remove(obj);
+      deleteShapeFromStorage(obj.objectId);
+    });
+
+    fabricRef?.current?.discardActiveObject();
+    fabricRef?.current?.requestRenderAll();
+  }, [fabricRef, deleteShapeFromStorage]);
 };
