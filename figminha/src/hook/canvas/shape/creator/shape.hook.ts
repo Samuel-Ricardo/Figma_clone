@@ -62,4 +62,18 @@ export const useShapeCreator = () => {
       }) as ICustomFabricObject,
     [],
   );
+
+  const createText = useCallback(
+    ({ pointer: { x, y }, text = 'Tap to Type' }: IShapeFormCreator) =>
+      new IText(text, {
+        objectId: uuidV4(),
+        left: x,
+        top: y,
+        fill: '#aabbcc',
+        fontFamily: 'Helveticas',
+        fontSize: 36,
+        fontWeight: '400',
+      }),
+    [],
+  );
 };
