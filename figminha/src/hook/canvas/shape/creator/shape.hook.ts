@@ -105,4 +105,22 @@ export const useShapeCreator = () => {
       startDrawn,
     ],
   );
+
+  const newShapeFromPoint = useCallback(
+    (pointer: Point) => {
+      if (!selectedShapeRef || !shapeRef || !pointer || !fabricRef?.current)
+        return;
+
+      startDrawn();
+      shapeRef.current = createShape({
+        pointer,
+        type: selectedShapeRef,
+      }) as ICustomFabricObject;
+
+      fabricRef.current.add(shapeRef.current);
+    },
+    [createShape, fabricRef, selectedShapeRef, shapeRef, startDrawn],
+  );
+
+  return { createShape, newShapeFromPoint };
 };
