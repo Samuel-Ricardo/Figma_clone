@@ -14,4 +14,17 @@ export const useShapeCreator = () => {
   const { startDrawn } = useCanvas();
   const { selectedShapeRef, shapeRef } = useShapeStore();
   const { fabricRef } = useFabricState();
+
+  const createRectangle = useCallback(
+    ({ pointer: { x, y } }: IShapeFormCreator) =>
+      new Rect({
+        left: x,
+        top: y,
+        width: 100,
+        height: 100,
+        fill: '#3fdfcd',
+        objectId: uuidV4(),
+      }) as ICustomFabricObject,
+    [],
+  );
 };
