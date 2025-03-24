@@ -23,4 +23,9 @@ export const useActiveElement = () => {
     deleteElementHandler();
     resetDefault();
   }, [deleteElementHandler, resetDefault]);
+
+  const initImageUpload = useCallback(() => {
+    imageInputRef?.current?.click();
+    stopDrawn();
+  }, [imageInputRef, stopDrawn]);
 };
