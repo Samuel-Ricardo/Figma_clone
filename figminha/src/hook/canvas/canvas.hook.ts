@@ -24,4 +24,16 @@ export const useCanvas = () => {
     fabricRef?.current?.discardActiveObject();
     fabricRef?.current?.requestRenderAll();
   }, [fabricRef, deleteShapeFromStorage]);
+
+  const stopDrawn = () => {
+    stopDrawing();
+    if (fabricRef?.current) fabricRef.current.isDrawingMode = false;
+  };
+
+  const startDrawn = () => {
+    startDrawing();
+    if (fabricRef?.current) fabricRef.current.isDrawingMode = true;
+    if (fabricRef?.current?.freeDrawingBrush)
+      fabricRef.current.freeDrawingBrush.width = 5;
+  };
 };
