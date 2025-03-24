@@ -8,4 +8,10 @@ export const useShapeTarget = () => {
   const { stopDrawn } = useCanvas();
   const { selectedShapeRef } = useShapeStore();
   const { fabricRef } = useFabricState();
+
+  const isTargetTheSelectedShape = useCallback(
+    (target: FabricObject | undefined) =>
+      target && target.type === selectedShapeRef,
+    [selectedShapeRef],
+  );
 };
