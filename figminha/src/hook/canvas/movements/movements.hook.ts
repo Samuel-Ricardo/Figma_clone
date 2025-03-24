@@ -54,4 +54,66 @@ export const useCanvasMovements = () => {
       isTargetTheActiveSelection,
     ],
   );
+
+  const handleCanvaseMouseMove = useCallback(
+    ({ options }: ICanvasMouseDown) => {
+      if (!isDrawing || selectedShapeRef === 'freeform') return;
+      stopDrawn();
+
+      const pointer = fabricRef?.current?.getPointer(options);
+      if (!pointer) return;
+
+      switch (selectedShapeRef) {
+        case 'rectangle':
+          shapeRef?.current?.set({
+            width: pointer.x - (shapeRef.current?.left || 0),
+            height: pointer.y - (shapeRef.current?.top || 0),
+          });
+          break;
+
+        case 'circle':
+          shapeRef?.current?.set({
+            radius: Math.abs(pointer.x - (shapeRef.current?.left || 0)) / 2,
+          });
+          break;
+
+        case 'triangle':
+          shapeRef?.current?.set({
+            width: pointer.x - (shapeRef.current?.left || 0),
+            height: pointer.y - (shapeRef.current?.top || 0),
+          });
+          break;
+
+        case 'line':
+          shapeRef?.current?.set({
+            x2: pointer.x,
+            y2: pointer.y,
+          });
+          break;
+
+        case 'image':
+          shapeRef?.current?.set({
+            width: pointer.x - (shapeRef.current?.left || 0),
+            height: pointer.y - (shapeRef.current?.top || 0),
+          });
+
+        default:
+          break;
+      }
+
+      fabricRef?.current?.renderAll();
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((shapeRef?.current as any).objectId)
+        syncShapeInStorage(shapeRef?.current);
+    },
+    [
+      fabricRef,
+      isDrawing,
+      selectedShapeRef,
+      shapeRef,
+      stopDrawn,
+      syncShapeInStorage,
+    ],
+  );
 };
