@@ -5,6 +5,6 @@ import {
   TPointerEvent,
 } from 'fabric';
 
-export interface ICanvasMouseDown {
+export interface ICanvasMouseEvent {
   options: TPointerEvent; //IEvent;
 }
