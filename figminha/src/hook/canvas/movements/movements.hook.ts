@@ -3,14 +3,19 @@ import { useShapeStore } from '@/store/canvas/shape/shape.store';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
 import { useCallback } from 'react';
 import { useShapeCreator } from '../shape/creator/shape.hook';
-import { ICanvasMouseDown } from '@/@types/fabric/events/move/down.type';
+import { ICanvasMouseEvent } from '@/@types/fabric/events/move/mouse.type';
 import { useShapeTarget } from '../shape/target/target.hook';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
 import { useShape } from '../shape/shape.hook';
 import { useActiveElementStore } from '@/store/canvas/element/active.store';
+import { ICanvasObjectMoving } from '@/@types/fabric/events/object/moving.type';
+import { useCanvasActions } from '../actions/actions.hook';
+import { IClampTargetPosition } from '@/@types/canvas/target/position/clamp/clamp.type';
 
+//canvasGestures
 export const useCanvasMovements = () => {
   const { stopDrawn, startDrawn } = useCanvas();
+  const { clampTargetPositionX, clampTargetPositionY } = useCanvasActions();
   const { isDrawing, activeObjectRef } = useCanvasStore();
   const { shapeRef, selectedShapeRef, setSelectedShapeRef } = useShapeStore();
   const { newShapeFromPoint } = useShapeCreator();
@@ -22,7 +27,7 @@ export const useCanvasMovements = () => {
     useShapeTarget();
 
   const handleCanvasMouseDown = useCallback(
-    ({ options }: ICanvasMouseDown) => {
+    ({ options }: ICanvasMouseEvent) => {
       if (!fabricRef?.current) return;
 
       const pointer = fabricRef.current.getPointer(options);
@@ -56,7 +61,7 @@ export const useCanvasMovements = () => {
   );
 
   const handleCanvaseMouseMove = useCallback(
-    ({ options }: ICanvasMouseDown) => {
+    ({ options }: ICanvasMouseEvent) => {
       if (!isDrawing || selectedShapeRef === 'freeform') return;
       stopDrawn();
 
@@ -132,9 +137,32 @@ export const useCanvasMovements = () => {
     resetAll();
   }, [resetAll, selectedShapeRef, shapeRef, syncShapeInStorage]);
 
+  const clampTargetPosition = useCallback(
+    ({ target, canvas }: IClampTargetPosition) => {
+      target.setCoords();
+
+      if (target.left) clampTargetPositionX({ target, canvas });
+      if (target.top) clampTargetPositionY({ target, canvas });
+    },
+    [clampTargetPositionX, clampTargetPositionY],
+  );
+
+  const handleCanvasObjectMovement = useCallback(
+    ({ options }: ICanvasObjectMoving) => {
+      const target = options.target;
+      if (!target) return;
+      const canvas = target.canvas;
+      if (!canvas) return;
+
+      clampTargetPosition({ target, canvas });
+    },
+    [clampTargetPosition],
+  );
+
   return {
     handleCanvasMouseDown,
     handleCanvaseMouseMove,
     handleCanvasMouseUp,
+    handleCanvasObjectMovement,
   };
 };
