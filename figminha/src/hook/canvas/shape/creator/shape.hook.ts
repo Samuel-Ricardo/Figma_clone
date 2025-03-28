@@ -9,11 +9,15 @@ import { v4 as uuidV4 } from 'uuid';
 import { useCanvas } from '../../canvas.hook';
 import { useShapeStore } from '@/store/canvas/shape/shape.store';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
+import { IPathCreatedEvent } from '@/@types/fabric/events/path/created.type';
+import { useShape } from '../shape.hook';
+import { ICanvasObjectModified } from '@/@types/fabric/events/object/modified.type';
 
 export const useShapeCreator = () => {
   const { startDrawn } = useCanvas();
   const { selectedShapeRef, shapeRef } = useShapeStore();
   const { fabricRef } = useFabricState();
+  const { syncShapeInStorage } = useShape();
 
   const createRectangle = useCallback(
     ({ pointer: { x, y } }: IShapeFormCreator) =>
@@ -122,5 +126,22 @@ export const useShapeCreator = () => {
     [createShape, fabricRef, selectedShapeRef, shapeRef, startDrawn],
   );
 
-  return { createShape, newShapeFromPoint };
+  const syncNewPath = useCallback(
+    ({ options: { path } }: IPathCreatedEvent) => {
+      if (!path) return;
+
+      path.set({ objectId: uuidV4() });
+      syncShapeInStorage(path);
+    },
+    [syncShapeInStorage],
+  );
+
+  const syncNewTarget = useCallback(
+    ({ options: { target } }: ICanvasObjectModified) => {
+      if (target?.type !== 'activeSelection') syncShapeInStorage(target);
+    },
+    [syncShapeInStorage],
+  );
+
+  return { createShape, newShapeFromPoint, syncNewPath, syncNewTarget };
 };
