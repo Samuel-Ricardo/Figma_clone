@@ -19,10 +19,23 @@ export const useCanvasActions = () => {
     [],
   );
 
+  const clampTargetPositionY = useCallback(
+    ({ canvas, target }: IClampTargetPosition) =>
+      (target.top = Math.max(
+        0,
+        Math.min(
+          target.top,
+          (canvas.height || 0) -
+            (target.getScaledHeight() || target.height || 0),
+        ),
+      )),
+    [],
+  );
+
   return {
     undo,
     redo,
     clampTargetPositionX,
-    //    clampTargetPositionY,
+    clampTargetPositionY,
   };
 };
