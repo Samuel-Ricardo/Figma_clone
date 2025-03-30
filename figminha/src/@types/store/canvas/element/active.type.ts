@@ -8,6 +8,8 @@ export interface IActiveElementStore {
   ) => boolean;
 
   setElement: (element: IElement) => void;
+  setElementAttributes: (attributes: IElementAttributes) => void;
+
   resetDefault: () => void;
   clearElement: () => void;
 }
