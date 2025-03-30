@@ -12,6 +12,7 @@ import { ICanvasObjectMoving } from '@/@types/fabric/events/object/moving.type';
 import { useCanvasActions } from '../actions/actions.hook';
 import { IClampTargetPosition } from '@/@types/canvas/target/position/clamp/clamp.type';
 import { ICanvasSelectionCreated } from '@/@types/fabric/events/selection/created.type';
+import { useActiveElement } from '../element/active.hook';
 
 //canvasGestures
 export const useCanvasMovements = () => {
@@ -23,6 +24,7 @@ export const useCanvasMovements = () => {
   const { syncShapeInStorage } = useShape();
   const { fabricRef } = useFabricState();
   const { resetDefault } = useActiveElementStore();
+  const { syncElementAttributes } = useActiveElement();
 
   const { setupTarget, isTargetTheActiveSelection, isTargetTheSelectedShape } =
     useShapeTarget();
@@ -162,12 +164,11 @@ export const useCanvasMovements = () => {
 
   const handleCanvasSelectionCreated = useCallback(
     ({ options }: ICanvasSelectionCreated) => {
-      if (isEditing) return;
-
-      const selected = options.selected;
-      if (!selected) return;
+      const selected = options.selected[0];
+      if (selected && !isEditing && options.selected.length === 1)
+        syncElementAttributes({ selected });
     },
-    [isEditing],
+    [isEditing, syncElementAttributes],
   );
 
   return {
