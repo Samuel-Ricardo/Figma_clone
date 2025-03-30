@@ -26,6 +26,8 @@ export const useActiveElementStore = create<IActiveElementStore>(set => ({
     (Array.isArray(value) && value.some(val => val?.value === element?.value)),
 
   setElement: element => set({ element }),
+  setElementAttributes: attributes => set({ attributes }),
+
   resetDefault: () =>
     set({
       element: defaultElement,
