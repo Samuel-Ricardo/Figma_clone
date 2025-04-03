@@ -27,6 +27,11 @@ export const useActiveElementStore = create<IActiveElementStore>(set => ({
 
   setElement: element => set({ element }),
   setElementAttributes: attributes => set({ attributes }),
+  setElementSize: ({ width, height }) =>
+    set(prev => ({
+      ...prev,
+      attributes: { ...prev.attributes, width, height },
+    })),
 
   resetDefault: () =>
     set({
