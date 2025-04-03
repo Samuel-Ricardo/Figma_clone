@@ -1,3 +1,5 @@
+import { IDimension } from './dimension.type';
+
 export interface IActiveElementStore {
   element?: IElement | null;
   attributes?: IElementAttributes | null;
@@ -9,6 +11,7 @@ export interface IActiveElementStore {
 
   setElement: (element: IElement) => void;
   setElementAttributes: (attributes: IElementAttributes) => void;
+  setElementSize: (dimension: IDimension) => void;
 
   resetDefault: () => void;
   clearElement: () => void;
@@ -21,11 +24,11 @@ export interface IElement {
 }
 
 export interface IElementAttributes {
-  width: string;
-  height: string;
-  fontSize: string;
-  fontFamily: string;
-  fontWeight: string;
-  fill: string;
-  stroke: string;
+  width?: string;
+  height?: string;
+  fontSize?: string;
+  fontFamily?: string;
+  fontWeight?: string;
+  fill?: string;
+  stroke?: string;
 }
