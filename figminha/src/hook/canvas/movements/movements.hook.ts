@@ -13,6 +13,7 @@ import { useCanvasActions } from '../actions/actions.hook';
 import { IClampTargetPosition } from '@/@types/canvas/target/position/clamp/clamp.type';
 import { ICanvasSelectionCreated } from '@/@types/fabric/events/selection/created.type';
 import { useActiveElement } from '../element/active.hook';
+import { ICanvasObjectScaling } from '@/@types/fabric/events/object/scaling.type';
 
 //canvasGestures
 export const useCanvasMovements = () => {
@@ -24,7 +25,7 @@ export const useCanvasMovements = () => {
   const { syncShapeInStorage } = useShape();
   const { fabricRef } = useFabricState();
   const { resetDefault } = useActiveElementStore();
-  const { syncElementAttributes } = useActiveElement();
+  const { syncElementAttributes, resizeElement } = useActiveElement();
 
   const { setupTarget, isTargetTheActiveSelection, isTargetTheSelectedShape } =
     useShapeTarget();
@@ -150,7 +151,7 @@ export const useCanvasMovements = () => {
     [clampTargetPositionX, clampTargetPositionY],
   );
 
-  const handleCanvasObjectMovement = useCallback(
+  const handleCanvasObjectMoving = useCallback(
     ({ options }: ICanvasObjectMoving) => {
       const target = options.target;
       if (!target) return;
@@ -160,6 +161,12 @@ export const useCanvasMovements = () => {
       clampTargetPosition({ target, canvas });
     },
     [clampTargetPosition],
+  );
+
+  const handleCanvasObjectScaling = useCallback(
+    ({ options: { target: selected } }: ICanvasObjectScaling) =>
+      resizeElement({ selected }),
+    [resizeElement],
   );
 
   const handleCanvasSelectionCreated = useCallback(
@@ -175,7 +182,8 @@ export const useCanvasMovements = () => {
     handleCanvasMouseDown,
     handleCanvaseMouseMove,
     handleCanvasMouseUp,
-    handleCanvasObjectMovement,
+    handleCanvasObjectMovement: handleCanvasObjectMoving,
     handleCanvasSelectionCreated,
+    handleCanvasObjectScaling,
   };
 };
