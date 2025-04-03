@@ -18,6 +18,7 @@ export const useCanvas = () => {
     handleCanvasMouseUp,
     handleCanvasObjectMovement,
     handleCanvasSelectionCreated,
+    handleCanvasObjectScaling,
   } = useCanvasMovements();
   const { syncNewPath, syncNewTarget } = useShapeCreator();
 
@@ -78,6 +79,9 @@ export const useCanvas = () => {
     canvas?.on('object:moving', options =>
       handleCanvasObjectMovement({ options }),
     );
+    canvas?.on('object:scaling', options =>
+      handleCanvasObjectScaling({ options }),
+    );
 
     canvas?.on('selection:created', options =>
       handleCanvasSelectionCreated({ options }),
@@ -91,6 +95,7 @@ export const useCanvas = () => {
     syncNewTarget,
     handleCanvasObjectMovement,
     handleCanvasSelectionCreated,
+    handleCanvasObjectScaling,
   ]);
 
   return { deleteElementHandler, stopDrawn, startDrawn, initializeCanvas };
