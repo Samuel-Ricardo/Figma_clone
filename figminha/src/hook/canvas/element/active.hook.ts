@@ -8,8 +8,13 @@ import { useShapeStore } from '@/store/canvas/shape/shape.store';
 import { ISyncCanvasElementAttributes } from '@/@types/canvas/element/attribute/sync.type';
 
 export const useActiveElement = () => {
-  const { clearElement, resetDefault, setElement, setElementAttributes } =
-    useActiveElementStore();
+  const {
+    clearElement,
+    resetDefault,
+    setElement,
+    setElementAttributes,
+    setElementSize,
+  } = useActiveElementStore();
   const { deleteAllShapes } = useShape();
   const { setSelectedShapeRef } = useShapeStore();
   const { deleteElementHandler, stopDrawn } = useCanvas();
@@ -91,5 +96,23 @@ export const useActiveElement = () => {
     [setElementAttributes],
   );
 
-  return { handleActiveElement, syncElementAttributes };
+  const resizeElement = useCallback(
+    ({ selected }: ISyncCanvasElementAttributes) => {
+      const scaledWidth = selected.scaleX
+        ? selected.width * selected.scaleX
+        : selected.width;
+
+      const scaledHeight = selected.scaleY
+        ? selected.height * selected.scaleY
+        : selected.height;
+
+      setElementSize({
+        width: scaledWidth.toFixed(0).toString() || '',
+        height: scaledHeight.toFixed(0).toString() || '',
+      });
+    },
+    [setElementSize],
+  );
+
+  return { handleActiveElement, syncElementAttributes, resizeElement };
 };
