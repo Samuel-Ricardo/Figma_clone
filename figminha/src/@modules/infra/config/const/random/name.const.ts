@@ -1,0 +1,31 @@
+export const ADJECTIVES = [
+  'Happy',
+  'Creative',
+  'Energetic',
+  'Lively',
+  'Dynamic',
+  'Radiant',
+  'Joyful',
+  'Vibrant',
+  'Cheerful',
+  'Sunny',
+  'Sparkling',
+  'Bright',
+  'Shining',
+];
+
+export const ANIMALS = [
+  'Dolphin',
+  'Tiger',
+  'Elephant',
+  'Penguin',
+  'Kangaroo',
+  'Panther',
+  'Lion',
+  'Cheetah',
+  'Giraffe',
+  'Hippopotamus',
+  'Monkey',
+  'Panda',
+  'Crocodile',
+];

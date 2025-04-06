@@ -4,6 +4,7 @@ import { Work_Sans } from 'next/font/google';
 import './globals.scss';
 import { LiveblocksRoomProvider } from '@/provider/liveblocks/room.provider';
 import { ThemeProvider } from '@/provider/theme/theme.provider';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 export const metadata: Metadata = {
   title: 'Figminha 🎨',
@@ -25,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.className}`}>
         <ThemeProvider />
-        <LiveblocksRoomProvider>{children}</LiveblocksRoomProvider>
+        <LiveblocksRoomProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </LiveblocksRoomProvider>
       </body>
     </html>
   );

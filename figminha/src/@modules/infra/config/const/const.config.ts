@@ -9,6 +9,7 @@ import { FONT_WEIGHT_OPTIONS } from './options/font/weight.const';
 import { SHORTCUT } from './shortcut.const';
 import { STORAGE } from './storage/storage.const';
 import { REACTIONS } from './reaction/reaction.const';
+import { ADJECTIVES, ANIMALS } from './random/name.const';
 
 export const CONST = {
   COLORS,
@@ -16,6 +17,10 @@ export const CONST = {
   SHORTCUT,
   STORAGE,
   REACTIONS,
+  NAMES: {
+    ANIMALS,
+    ADJECTIVES,
+  },
 
   NAV: {
     ELEMENT: {
