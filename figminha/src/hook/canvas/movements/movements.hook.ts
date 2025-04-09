@@ -3,7 +3,7 @@ import { useShapeStore } from '@/store/canvas/shape/shape.store';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
 import { useCallback } from 'react';
 import { useShapeCreator } from '../shape/creator/shape.hook';
-import { ICanvasMouseEvent } from '@/@types/fabric/events/move/mouse.type';
+import { ICanvasMouseEvent } from '@/@types/fabric/events/mouse/mouse.type';
 import { useShapeTarget } from '../shape/target/target.hook';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
 import { useShape } from '../shape/shape.hook';
@@ -14,6 +14,7 @@ import { IClampTargetPosition } from '@/@types/canvas/target/position/clamp/clam
 import { ICanvasSelectionCreated } from '@/@types/fabric/events/selection/created.type';
 import { useActiveElement } from '../element/active.hook';
 import { ICanvasObjectScaling } from '@/@types/fabric/events/object/scaling.type';
+import { ICanvasMouseWheelEvent } from '@/@types/fabric/events/mouse/wheel.type';
 
 //canvasGestures
 export const useCanvasMovements = () => {
@@ -178,6 +179,15 @@ export const useCanvasMovements = () => {
     [isEditing, syncElementAttributes],
   );
 
+  const handleCanvasMouseWheel = useCallback(
+    ({ e }: ICanvasMouseWheelEvent) => {
+      const delta = e.deltaY;
+      if (delta < 0) zoomIn();
+      if (delta > 0) zoomOut();
+    },
+    [zoomIn, zoomOut],
+  );
+
   return {
     handleCanvasMouseDown,
     handleCanvaseMouseMove,
@@ -185,5 +195,6 @@ export const useCanvasMovements = () => {
     handleCanvasObjectMovement: handleCanvasObjectMoving,
     handleCanvasSelectionCreated,
     handleCanvasObjectScaling,
+    handleCanvasMouseWheel,
   };
 };
