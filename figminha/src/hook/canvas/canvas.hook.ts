@@ -1,26 +1,15 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useShape } from './shape/shape.hook';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
 import { ICustomFabricObject } from '@/@types/fabric/object.type';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
 import { Canvas } from 'fabric';
-import { useCanvasMovements } from './movements/movements.hook';
-import { useShapeCreator } from './shape/creator/shape.hook';
 
 export const useCanvas = () => {
   const { deleteShapeFromStorage } = useShape();
   const { fabricRef } = useFabricState();
   const { canvasRef } = useCanvasStore();
   const { stopDrawing, startDrawing } = useCanvasStore();
-  const {
-    handleCanvaseMouseMove,
-    handleCanvasMouseDown,
-    handleCanvasMouseUp,
-    handleCanvasObjectMovement,
-    handleCanvasSelectionCreated,
-    handleCanvasObjectScaling,
-  } = useCanvasMovements();
-  const { syncNewPath, syncNewTarget } = useShapeCreator();
 
   const deleteElementHandler = useCallback(() => {
     const activeObjects = fabricRef?.current?.getObjects();
@@ -65,38 +54,6 @@ export const useCanvas = () => {
 
     return canvas;
   }, [canvasRef, fabricRef]);
-
-  useEffect(() => {
-    const canvas = initializeCanvas();
-
-    canvas?.on('mouse:down', ({ e }) => handleCanvasMouseDown({ options: e }));
-    canvas?.on('mouse:move', ({ e }) => handleCanvaseMouseMove({ options: e }));
-    canvas?.on('mouse:up', () => handleCanvasMouseUp());
-
-    canvas?.on('path:created', options => syncNewPath({ options }));
-
-    canvas?.on('object:modified', options => syncNewTarget({ options }));
-    canvas?.on('object:moving', options =>
-      handleCanvasObjectMovement({ options }),
-    );
-    canvas?.on('object:scaling', options =>
-      handleCanvasObjectScaling({ options }),
-    );
-
-    canvas?.on('selection:created', options =>
-      handleCanvasSelectionCreated({ options }),
-    );
-  }, [
-    initializeCanvas,
-    handleCanvasMouseDown,
-    handleCanvaseMouseMove,
-    handleCanvasMouseUp,
-    syncNewPath,
-    syncNewTarget,
-    handleCanvasObjectMovement,
-    handleCanvasSelectionCreated,
-    handleCanvasObjectScaling,
-  ]);
 
   return { deleteElementHandler, stopDrawn, startDrawn, initializeCanvas };
 };
