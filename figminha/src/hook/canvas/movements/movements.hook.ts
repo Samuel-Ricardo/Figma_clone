@@ -15,11 +15,10 @@ import { ICanvasSelectionCreated } from '@/@types/fabric/events/selection/create
 import { useActiveElement } from '../element/active.hook';
 import { ICanvasObjectScaling } from '@/@types/fabric/events/object/scaling.type';
 import { ICanvasMouseWheelEvent } from '@/@types/fabric/events/mouse/wheel.type';
-import { ICanvasObjectResize } from '@/@types/fabric/events/object/resize.type';
 
 //canvasGestures
 export const useCanvasMovements = () => {
-  const { stopDrawn, startDrawn, dynamicZoom } = useCanvas();
+  const { stopDrawn, startDrawn, dynamicZoom, resize } = useCanvas();
   const { clampTargetPositionX, clampTargetPositionY } = useCanvasActions();
   const { isDrawing, activeObjectRef, isEditing } = useCanvasStore();
   const { shapeRef, selectedShapeRef, setSelectedShapeRef } = useShapeStore();
@@ -196,10 +195,9 @@ export const useCanvasMovements = () => {
     [fabricRef, dynamicZoom],
   );
 
-  const handleCanvasObjectResize = useCallback(
-    (options: ICanvasObjectResize) => options,
-    [],
-  );
+  const handleCanvasObjectResize = useCallback(() => resize(), [resize]);
+
+  //const handleCanvasKeyDown = useCallback();
 
   return {
     handleCanvasMouseDown,
