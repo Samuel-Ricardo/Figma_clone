@@ -12,6 +12,7 @@ export const useCanvasGestures = () => {
     handleCanvasObjectMovement,
     handleCanvasSelectionCreated,
     handleCanvasObjectScaling,
+    handleCanvasObjectResize,
     handleCanvasMouseWheel,
   } = useCanvasMovements();
   const { syncNewPath, syncNewTarget } = useShapeCreator();
@@ -33,6 +34,7 @@ export const useCanvasGestures = () => {
     canvas?.on('object:scaling', options =>
       handleCanvasObjectScaling({ options }),
     );
+    canvas?.on('object:resizing', handleCanvasObjectResize);
 
     canvas?.on('selection:created', options =>
       handleCanvasSelectionCreated({ options }),
@@ -47,5 +49,7 @@ export const useCanvasGestures = () => {
     handleCanvasObjectMovement,
     handleCanvasSelectionCreated,
     handleCanvasObjectScaling,
+    handleCanvasObjectResize,
+    handleCanvasMouseWheel,
   ]);
 };
