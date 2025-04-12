@@ -3,7 +3,8 @@ import { useShape } from './shape/shape.hook';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
 import { ICustomFabricObject } from '@/@types/fabric/object.type';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
-import { Canvas } from 'fabric';
+import { Canvas, Point } from 'fabric';
+import { ICanvasDynamicZoom } from '@/@types/canvas/zoom.type';
 
 export const useCanvas = () => {
   const { deleteShapeFromStorage } = useShape();
@@ -55,5 +56,27 @@ export const useCanvas = () => {
     return canvas;
   }, [canvasRef, fabricRef]);
 
-  return { deleteElementHandler, stopDrawn, startDrawn, initializeCanvas };
+  const dynamicZoom = useCallback(
+    ({
+      delta,
+      position,
+      zoom,
+      min = 0.2,
+      max = 1,
+      step = 0.001,
+    }: ICanvasDynamicZoom) =>
+      fabricRef?.current?.zoomToPoint(
+        new Point(position.x, position.y),
+        Math.min(Math.max(min, zoom + delta * step), max),
+      ),
+    [fabricRef],
+  );
+
+  return {
+    deleteElementHandler,
+    stopDrawn,
+    startDrawn,
+    initializeCanvas,
+    dynamicZoom,
+  };
 };
