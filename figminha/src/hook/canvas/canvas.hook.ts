@@ -72,11 +72,21 @@ export const useCanvas = () => {
     [fabricRef],
   );
 
+  const resize = useCallback(
+    () =>
+      fabricRef?.current?.setDimensions({
+        width: canvasRef?.current?.clientWidth,
+        height: canvasRef?.current?.clientHeight,
+      }),
+    [fabricRef, canvasRef],
+  );
+
   return {
     deleteElementHandler,
     stopDrawn,
     startDrawn,
     initializeCanvas,
     dynamicZoom,
+    resize,
   };
 };
