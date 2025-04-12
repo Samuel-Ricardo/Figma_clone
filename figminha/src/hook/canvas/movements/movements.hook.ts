@@ -15,10 +15,11 @@ import { ICanvasSelectionCreated } from '@/@types/fabric/events/selection/create
 import { useActiveElement } from '../element/active.hook';
 import { ICanvasObjectScaling } from '@/@types/fabric/events/object/scaling.type';
 import { ICanvasMouseWheelEvent } from '@/@types/fabric/events/mouse/wheel.type';
+import { ICanvasObjectResize } from '@/@types/fabric/events/object/resize.type';
 
 //canvasGestures
 export const useCanvasMovements = () => {
-  const { stopDrawn, startDrawn } = useCanvas();
+  const { stopDrawn, startDrawn, dynamicZoom } = useCanvas();
   const { clampTargetPositionX, clampTargetPositionY } = useCanvasActions();
   const { isDrawing, activeObjectRef, isEditing } = useCanvasStore();
   const { shapeRef, selectedShapeRef, setSelectedShapeRef } = useShapeStore();
@@ -181,11 +182,23 @@ export const useCanvasMovements = () => {
 
   const handleCanvasMouseWheel = useCallback(
     ({ e }: ICanvasMouseWheelEvent) => {
-      const delta = e.deltaY;
-      if (delta < 0) zoomIn();
-      if (delta > 0) zoomOut();
+      if (!fabricRef?.current) return;
+
+      dynamicZoom({
+        delta: e.deltaY,
+        zoom: fabricRef.current.getZoom(),
+        position: { x: e.offsetX, y: e.offsetY },
+      });
+
+      e.preventDefault();
+      e.stopPropagation();
     },
-    [zoomIn, zoomOut],
+    [fabricRef, dynamicZoom],
+  );
+
+  const handleCanvasObjectResize = useCallback(
+    (options: ICanvasObjectResize) => options,
+    [],
   );
 
   return {
@@ -196,5 +209,6 @@ export const useCanvasMovements = () => {
     handleCanvasSelectionCreated,
     handleCanvasObjectScaling,
     handleCanvasMouseWheel,
+    handleCanvasObjectResize,
   };
 };
