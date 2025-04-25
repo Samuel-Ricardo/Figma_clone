@@ -1,8 +1,10 @@
+import { ICustomFabricObject } from '@/@types/fabric/object.type';
 import { LiveMap } from '@liveblocks/client';
 import { Object } from 'fabric';
 
 export interface ICanvasStore {
   canvasRef?: React.MutableRefObject<HTMLCanvasElement | null> | null;
+  clipboard: ICustomFabricObject[];
   isDrawing: boolean;
   isEditing: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +21,10 @@ export interface ICanvasStore {
   setImageInputRef: (
     imageInputRef: React.MutableRefObject<HTMLInputElement | null> | null,
   ) => void;
+
+  setClipboard: (clipboard: ICustomFabricObject[]) => void;
+  clearClipboard: () => void;
+  getClipboard: () => ICustomFabricObject[];
 
   startDrawing: () => void;
   stopDrawing: () => void;
