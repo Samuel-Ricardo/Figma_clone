@@ -34,11 +34,13 @@ export const useCanvasGestures = () => {
     canvas?.on('object:scaling', options =>
       handleCanvasObjectScaling({ options }),
     );
-    canvas?.on('object:resizing', handleCanvasObjectResize);
+    window?.addEventListener('resize', handleCanvasObjectResize);
 
     canvas?.on('selection:created', options =>
       handleCanvasSelectionCreated({ options }),
     );
+
+    window?.addEventListener('keydown', event => event);
   }, [
     initializeCanvas,
     handleCanvasMouseDown,
