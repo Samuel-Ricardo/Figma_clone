@@ -81,6 +81,18 @@ export const useCanvas = () => {
     [fabricRef, canvasRef],
   );
 
+  const copy = useCallback(() => {
+    if (!fabricRef?.current) return [];
+
+    const activeObjects = fabricRef.current.getActiveObjects();
+    if (activeObjects.length <= 0) return activeObjects;
+
+    const serializedObjects = activeObjects?.map(obj => obj.toObject());
+    localStorage.setItem('clipboard', JSON.stringify(serializedObjects));
+
+    return activeObjects;
+  }, [fabricRef]);
+
   return {
     deleteElementHandler,
     stopDrawn,
@@ -88,5 +100,6 @@ export const useCanvas = () => {
     initializeCanvas,
     dynamicZoom,
     resize,
+    copy,
   };
 };
