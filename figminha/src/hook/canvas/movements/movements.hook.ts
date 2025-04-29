@@ -1,7 +1,7 @@
 import { useCanvas } from '../canvas.hook';
 import { useShapeStore } from '@/store/canvas/shape/shape.store';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
-import { useCallback } from 'react';
+import { KeyboardEvent, useCallback } from 'react';
 import { useShapeCreator } from '../shape/creator/shape.hook';
 import { ICanvasMouseEvent } from '@/@types/fabric/events/mouse/mouse.type';
 import { useShapeTarget } from '../shape/target/target.hook';
@@ -18,7 +18,7 @@ import { ICanvasMouseWheelEvent } from '@/@types/fabric/events/mouse/wheel.type'
 
 //canvasGestures
 export const useCanvasMovements = () => {
-  const { stopDrawn, startDrawn, dynamicZoom, resize } = useCanvas();
+  const { stopDrawn, startDrawn, dynamicZoom, resize, copy } = useCanvas();
   const { clampTargetPositionX, clampTargetPositionY } = useCanvasActions();
   const { isDrawing, activeObjectRef, isEditing } = useCanvasStore();
   const { shapeRef, selectedShapeRef, setSelectedShapeRef } = useShapeStore();
@@ -197,7 +197,15 @@ export const useCanvasMovements = () => {
 
   const handleCanvasObjectResize = useCallback(() => resize(), [resize]);
 
-  //const handleCanvasKeyDown = useCallback();
+  const handleCanvasKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      const pressCtrl = event?.ctrlKey || event?.metaKey;
+      const pressC = event.key === 'c' || event.key === 'C';
+
+      if (pressCtrl && pressC) copy();
+    },
+    [copy],
+  );
 
   return {
     handleCanvasMouseDown,
@@ -208,5 +216,6 @@ export const useCanvasMovements = () => {
     handleCanvasObjectScaling,
     handleCanvasMouseWheel,
     handleCanvasObjectResize,
+    handleCanvasKeyDown,
   };
 };
