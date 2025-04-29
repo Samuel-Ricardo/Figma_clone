@@ -18,7 +18,8 @@ import { ICanvasMouseWheelEvent } from '@/@types/fabric/events/mouse/wheel.type'
 
 //canvasGestures
 export const useCanvasMovements = () => {
-  const { stopDrawn, startDrawn, dynamicZoom, resize, copy } = useCanvas();
+  const { stopDrawn, startDrawn, dynamicZoom, resize, copy, paste } =
+    useCanvas();
   const { clampTargetPositionX, clampTargetPositionY } = useCanvasActions();
   const { isDrawing, activeObjectRef, isEditing } = useCanvasStore();
   const { shapeRef, selectedShapeRef, setSelectedShapeRef } = useShapeStore();
@@ -201,10 +202,12 @@ export const useCanvasMovements = () => {
     (event: KeyboardEvent) => {
       const pressCtrl = event?.ctrlKey || event?.metaKey;
       const pressC = event.key === 'c' || event.key === 'C';
+      const pressV = event.key === 'v' || event.key === 'V';
 
       if (pressCtrl && pressC) copy();
+      if (pressCtrl && pressV) paste();
     },
-    [copy],
+    [copy, paste],
   );
 
   return {
