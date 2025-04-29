@@ -27,6 +27,7 @@ export const useCanvasMovements = () => {
     paste,
     deleteShape,
     cut,
+    undo,
   } = useCanvas();
   const { clampTargetPositionX, clampTargetPositionY } = useCanvasActions();
   const { isDrawing, activeObjectRef, isEditing } = useCanvasStore();
@@ -209,17 +210,21 @@ export const useCanvasMovements = () => {
   const handleCanvasKeyDown = useCallback(
     (event: KeyboardEvent) => {
       const pressCtrl = event?.ctrlKey || event?.metaKey;
+      const perssDelete = event.key === 'Backspace' || event.key === 'Delete';
+
       const pressC = event.key === 'c' || event.key === 'C';
       const pressV = event.key === 'v' || event.key === 'V';
       const pressX = event.key === 'x' || event.key === 'X';
-      const perssDelete = event.key === 'Backspace' || event.key === 'Delete';
+      const pressZ = event.key === 'z' || event.key === 'Z';
 
       if (pressCtrl && pressC) copy();
       if (pressCtrl && pressV) paste();
       if (perssDelete) deleteShape();
       if (pressCtrl && pressX) cut();
+
+      if (pressCtrl && pressZ) undo();
     },
-    [copy, paste, deleteShape, cut],
+    [copy, paste, deleteShape, cut, undo],
   );
 
   return {
