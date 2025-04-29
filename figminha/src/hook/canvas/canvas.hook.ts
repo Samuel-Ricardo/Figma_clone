@@ -147,6 +147,12 @@ export const useCanvas = () => {
     fabricRef?.current?.renderAll();
   }, [fabricRef, deleteShapeFromStorage]);
 
+  const cut = useCallback(() => {
+    const activeObjects = copy();
+    deleteShape();
+    return activeObjects;
+  }, [copy, deleteShape]);
+
   return {
     deleteElementHandler,
     stopDrawn,
@@ -157,5 +163,6 @@ export const useCanvas = () => {
     copy,
     paste,
     deleteShape,
+    cut,
   };
 };
