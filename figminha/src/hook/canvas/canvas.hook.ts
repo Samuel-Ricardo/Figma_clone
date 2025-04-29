@@ -6,6 +6,7 @@ import { useCanvasStore } from '@/store/canvas/canvas.store';
 import { Canvas, Object, Point, util } from 'fabric';
 import { ICanvasDynamicZoom } from '@/@types/canvas/zoom.type';
 import { v4 as uuidv4 } from 'uuid';
+import { useUndo } from '../../../liveblocks.config';
 
 export const useCanvas = () => {
   const { syncShapeInStorage, deleteShapeFromStorage } = useShape();
@@ -153,6 +154,8 @@ export const useCanvas = () => {
     return activeObjects;
   }, [copy, deleteShape]);
 
+  const undo = useUndo();
+
   return {
     deleteElementHandler,
     stopDrawn,
@@ -164,5 +167,6 @@ export const useCanvas = () => {
     paste,
     deleteShape,
     cut,
+    undo,
   };
 };
