@@ -134,6 +134,19 @@ export const useCanvas = () => {
     clipboard.forEach(deserialize);
   }, [deserialize, fabricRef, getClipboard]);
 
+  const deleteShape = useCallback(() => {
+    fabricRef?.current
+      ?.getActiveObjects()
+      .forEach((obj: ICustomFabricObject) => {
+        if (!obj.objectId) return;
+        fabricRef?.current?.remove(obj);
+        deleteShapeFromStorage(obj.objectId);
+      });
+
+    fabricRef?.current?.discardActiveObject();
+    fabricRef?.current?.renderAll();
+  }, [fabricRef, deleteShapeFromStorage]);
+
   return {
     deleteElementHandler,
     stopDrawn,
@@ -143,5 +156,6 @@ export const useCanvas = () => {
     resize,
     copy,
     paste,
+    deleteShape,
   };
 };
