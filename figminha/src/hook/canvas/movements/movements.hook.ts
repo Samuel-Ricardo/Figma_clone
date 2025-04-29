@@ -212,6 +212,7 @@ export const useCanvasMovements = () => {
     (event: KeyboardEvent) => {
       const pressCtrl = event?.ctrlKey || event?.metaKey;
       const perssDelete = event.key === 'Backspace' || event.key === 'Delete';
+      const pressBar = event.key === '/' && !event.shiftKey;
 
       const pressC = event.key === 'c' || event.key === 'C';
       const pressV = event.key === 'v' || event.key === 'V';
@@ -226,6 +227,8 @@ export const useCanvasMovements = () => {
 
       if (pressCtrl && pressZ) undo();
       if (pressCtrl && pressY) redo();
+
+      if (pressBar) event.preventDefault();
     },
     [copy, paste, deleteShape, cut, undo, redo],
   );
