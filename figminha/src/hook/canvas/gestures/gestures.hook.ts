@@ -14,6 +14,7 @@ export const useCanvasGestures = () => {
     handleCanvasObjectScaling,
     handleCanvasObjectResize,
     handleCanvasMouseWheel,
+    handleCanvasKeyDown,
   } = useCanvasMovements();
   const { syncNewPath, syncNewTarget } = useShapeCreator();
 
@@ -40,18 +41,26 @@ export const useCanvasGestures = () => {
       handleCanvasSelectionCreated({ options }),
     );
 
-    window?.addEventListener('keydown', event => event);
+    window?.addEventListener('keydown', handleCanvasKeyDown);
+
+    return () => {
+      canvas?.dispose();
+
+      window.removeEventListener('resize', handleCanvasObjectResize);
+      window.removeEventListener('keydown', handleCanvasKeyDown);
+    };
   }, [
     initializeCanvas,
     handleCanvasMouseDown,
     handleCanvaseMouseMove,
     handleCanvasMouseUp,
-    syncNewPath,
-    syncNewTarget,
+    handleCanvasMouseWheel,
     handleCanvasObjectMovement,
-    handleCanvasSelectionCreated,
     handleCanvasObjectScaling,
     handleCanvasObjectResize,
-    handleCanvasMouseWheel,
+    handleCanvasSelectionCreated,
+    handleCanvasKeyDown,
+    syncNewPath,
+    syncNewTarget,
   ]);
 };
