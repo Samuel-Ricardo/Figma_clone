@@ -10,11 +10,7 @@ import { useMyPresenceHandler } from '@/hook/presence.hook';
 import { FloatingReaction } from '../reaction/floating/floating.component';
 import { useReactionState } from '@/store/reaction/reaction.store';
 import { useCursorState } from '@/store/cursor/cursor.store';
-import {
-  CHAT,
-  REACTION,
-  REACTION_SELECTOR,
-} from '@/@types/props/cursor/mode.type';
+import { REACTION, REACTION_SELECTOR } from '@/@types/props/cursor/mode.type';
 import { ReactionSelector } from '../reaction/selector/selector.component';
 import { Cursor } from '../cursor/cursor.component';
 import { useReactionStartup } from '@/hook/reaction/startup.hook';
@@ -22,8 +18,11 @@ import { ContextMenu } from '../context/menu/menu.component';
 import { ContextMenuTrigger } from '../context/menu/trigger/trigger.component';
 import { useCanvasStore } from '@/store/canvas/canvas.store';
 import { Shortcuts } from './shortcuts/shortcuts.component';
+import { useSetupCanvas } from '@/hook/canvas/setup.hook';
 
 export const Live = () => {
+  useSetupCanvas();
+
   const others = useOthers();
   const { setupWindowKeyListeners, removeWindowKeyListeners } =
     useCursorStateHandleByKey({ message: null });
@@ -48,7 +47,8 @@ export const Live = () => {
       <ContextMenuTrigger
         id="canvas"
         style={{
-          cursor: state.mode === CHAT ? 'none' : 'auto',
+          cursor: `none`,
+          //          cursor: state.mode === CHAT ? 'none' : 'auto',
         }}
         className="relative flex h-full w-full flex-1 items-center justify-center"
         onPointerEnter={handlePointerEnter}
