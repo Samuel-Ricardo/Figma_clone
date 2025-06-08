@@ -1,7 +1,7 @@
 import { useCanvas } from '../canvas.hook';
 import { useShapeStore } from '@/store/canvas/shape/shape.store';
 import { useFabricState } from '@/store/canvas/fabric/fabric.store';
-import { KeyboardEvent, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useShapeCreator } from '../shape/creator/shape.hook';
 import { ICanvasMouseEvent } from '@/@types/fabric/events/mouse/mouse.type';
 import { useShapeTarget } from '../shape/target/target.hook';
@@ -209,7 +209,7 @@ export const useCanvasMovements = () => {
   const handleCanvasObjectResize = useCallback(() => resize(), [resize]);
 
   const handleCanvasKeyDown = useCallback(
-    (event: KeyboardEvent) => {
+    (event: _KeyboardEvent) => {
       const pressCtrl = event?.ctrlKey || event?.metaKey;
       const perssDelete = event.key === 'Backspace' || event.key === 'Delete';
       const pressBar = event.key === '/' && !event.shiftKey;
