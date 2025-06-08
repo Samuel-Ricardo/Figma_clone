@@ -11,8 +11,9 @@ import { useUndo, useRedo } from '../../../liveblocks.config';
 export const useCanvas = () => {
   const { syncShapeInStorage, deleteShapeFromStorage } = useShape();
   const { fabricRef } = useFabricState();
-  const { canvasRef, setClipboard, getClipboard } = useCanvasStore();
-  const { stopDrawing, startDrawing } = useCanvasStore();
+  const { canvasRef, setClipboard, getClipboard, canvasObjects } =
+    useCanvasStore();
+  const { stopDrawing, startDrawing, activeObjectRef } = useCanvasStore();
 
   const deleteElementHandler = useCallback(() => {
     const activeObjects = fabricRef?.current?.getObjects();
@@ -157,6 +158,34 @@ export const useCanvas = () => {
   const undo = useUndo;
   const redo = useRedo;
 
+  const createCorrectCanvasInstacesForEachObject = useCallback(() => {
+    if (!canvasObjects) return console.log('Error: ', { canvasObjects });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Array.from(canvasObjects, ([_objectId, objectData], _number) => {
+      util.enlivenObjects([objectData], {
+        signal: new AbortController().signal,
+        reviver: enlivedObjects => {
+          enlivedObjects.forEach((enlivenedObject: Object) => {
+            console.log({ enlivenedObject });
+            if (
+              JSON.stringify(activeObjectRef?.current) ===
+              JSON.stringify(objectData)
+            )
+              fabricRef?.current?.setActiveObject(enlivenedObject);
+
+            fabricRef?.current?.add(enlivenedObject);
+          });
+        },
+      });
+    });
+  }, [canvasObjects, fabricRef, activeObjectRef]);
+
+  const render = useCallback(() => {
+    fabricRef?.current?.clear();
+    createCorrectCanvasInstacesForEachObject();
+    fabricRef?.current?.renderAll();
+  }, [fabricRef, createCorrectCanvasInstacesForEachObject]);
+
   return {
     deleteElementHandler,
     stopDrawn,
@@ -170,5 +199,6 @@ export const useCanvas = () => {
     cut,
     undo,
     redo,
+    render,
   };
 };
