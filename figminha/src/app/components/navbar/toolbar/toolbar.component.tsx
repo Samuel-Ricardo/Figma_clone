@@ -1,32 +1,20 @@
-'use client';
+//'use client';
 
 import './toolbar.style.scss';
 
 import { MODULES } from '@/@modules/app.factory';
-import { IElement } from '@/@types/store/canvas/element/active.type';
-import { useActiveElementStore } from '@/store/canvas/element/active.store';
-import { useCallback } from 'react';
+import { NavbarToolBarItem } from './item/item.component';
 
 export const NavbarToolbar = () => {
   //const {} = useActiveElementHandler();
   //const {} = useImageUploadHandler();
-  const handleActiveElement = (value: string) => console.log({ value });
-  const { isActive, element } = useActiveElementStore();
-
-  const onClick = useCallback((item: IElement) => {
-    if (!Array.isArray(item.value)) handleActiveElement(item.value);
-  }, []);
 
   const NAV_ELEMENTS = MODULES.INFRA.CONFIG.CONST().NAV.ELEMENT.ALL;
 
   return (
-    <ul>
+    <ul id="toolbar--container">
       {NAV_ELEMENTS.map(item => (
-        <li
-          key={item.name}
-          onClick={() => onClick(item)}
-          className={`${isActive(item.value, element) ? 'bg-primary-green' : 'hover:bg-primary-grey-200'}`}
-        ></li>
+        <NavbarToolBarItem key={item.name} item={item} />
       ))}
     </ul>
   );
