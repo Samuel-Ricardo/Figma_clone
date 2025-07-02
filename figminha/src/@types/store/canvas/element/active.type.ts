@@ -5,7 +5,7 @@ export interface IActiveElementStore {
   attributes?: IElementAttributes | null;
 
   isActive: (
-    value: string | Array<IElement>,
+    value: string | Array<ActiveElement>,
     element?: IElement | null,
   ) => boolean;
 
@@ -17,9 +17,15 @@ export interface IActiveElementStore {
   clearElement: () => void;
 }
 
-export interface IElement {
+export type ActiveElement = {
   name: string;
   value: string;
+  icon: string;
+} | null;
+
+export interface IElement<V = string> {
+  name: string;
+  value: V | Array<ActiveElement>;
   icon: string;
 }
 
