@@ -1,3 +1,5 @@
+'use client';
+
 import { ShapesMenu } from '@/app/components/shapes/menu/menu.component';
 import './item.style.scss';
 
@@ -8,6 +10,7 @@ import {
 import { useActiveElementStore } from '@/store/canvas/element/active.store';
 import Image from 'next/image';
 import { useCallback } from 'react';
+import { Button } from '@/app/components/ui/button/button.component';
 
 export interface INavbarToolBarItemProps {
   item: IElement<any>;
@@ -30,13 +33,14 @@ export const NavbarToolBarItem = ({ item }: INavbarToolBarItemProps) => {
       {Array.isArray(item.value) ? (
         <ShapesMenu item={item} />
       ) : item?.value === 'comments' ? (
-        <NewThread />
+        <></> //        <NewThread />
       ) : (
         <Button>
           <Image
             src={item.icon}
             alt={item.name}
-            fill
+            width={24}
+            height={24}
             className={isActive(item.value) ? 'invert' : ''}
           />
         </Button>
