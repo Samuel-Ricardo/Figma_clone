@@ -1,0 +1,7 @@
+@import '../../../../global.scss';
+
+.pinned-composer--container {
+  @apply absolute;
+  @apply flex;
+  @apply gap-4;
+}
