@@ -24,4 +24,16 @@
       @apply rounded-full;
     }
   }
+
+  .pinned-composer--content {
+    @apply shadow;
+    @apply bg-white;
+    @apply rounded-lg;
+    @apply flex;
+    @apply flex-col;
+    @apply text-sm;
+    @apply min-w-96;
+    @apply overflow-hidden;
+    @apply p-2;
+  }
 }
