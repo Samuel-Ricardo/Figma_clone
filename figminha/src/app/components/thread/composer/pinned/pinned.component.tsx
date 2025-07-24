@@ -2,8 +2,9 @@ import Image from 'next/image';
 import './pinned.style.scss';
 
 import { Composer } from '@liveblocks/react-comments';
+import { IPinnedComposerProps } from '@/@types/props/thread/composer/pinned.type';
 
-export const PinnedComposer = () => {
+export const PinnedComposer = ({ onComposerSubmit }: IPinnedComposerProps) => {
   return (
     <div className="pinned-composer--container">
       <div className="pinned-composer--avatar">
@@ -16,7 +17,11 @@ export const PinnedComposer = () => {
       </div>
       <div className="pinned-composer--content">
         {/*Comment*/}
-        <Composer autoFocus onKeyUp={e => e.stopPropagation()} />
+        <Composer
+          autoFocus
+          onKeyUp={e => e.stopPropagation()}
+          onComposerSubmit={onComposerSubmit}
+        />
       </div>
     </div>
   );
