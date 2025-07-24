@@ -15,6 +15,7 @@ export const PinnedComposer = () => {
         />
       </div>
       <div className="pinned-composer--content">
+        {/*Comment*/}
         <Composer autoFocus onKeyUp={e => e.stopPropagation()} />
       </div>
     </div>
