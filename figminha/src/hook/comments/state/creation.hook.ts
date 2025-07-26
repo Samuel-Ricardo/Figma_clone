@@ -4,7 +4,7 @@ import {
   PLACING,
   PLACED,
 } from '@/@types/comment/state/creation.type';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export const useCommentCreationState = () => {
   const [creatingCommentState, setCreatingCommentState] =
@@ -14,8 +14,23 @@ export const useCommentCreationState = () => {
   const commentPlacing = () => setCreatingCommentState(PLACING);
   const commentPlaced = () => setCreatingCommentState(PLACED);
 
+  const isCompleted = useMemo(
+    () => creatingCommentState === COMPLETED,
+    [creatingCommentState],
+  );
+  const isPlacing = useMemo(
+    () => creatingCommentState === PLACING,
+    [creatingCommentState],
+  );
+  const isPlaced = useMemo(
+    () => creatingCommentState === PLACED,
+    [creatingCommentState],
+  );
+
   return {
-    creatingCommentState,
+    isCompleted,
+    isPlacing,
+    isPlaced,
     commentCreated,
     commentPlacing,
     commentPlaced,
