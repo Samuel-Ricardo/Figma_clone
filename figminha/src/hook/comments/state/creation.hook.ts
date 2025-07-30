@@ -1,31 +1,21 @@
 import {
-  CreationCommentState,
   COMPLETED,
   PLACING,
   PLACED,
 } from '@/@types/comment/state/creation.type';
-import { useMemo, useState } from 'react';
+import { useCommentStore } from '@/store/comment/comment.store';
+import { useMemo } from 'react';
 
 export const useCommentCreationState = () => {
-  const [creatingCommentState, setCreatingCommentState] =
-    useState<CreationCommentState>(COMPLETED);
+  const { setState, state } = useCommentStore();
 
-  const commentCreated = () => setCreatingCommentState(COMPLETED);
-  const commentPlacing = () => setCreatingCommentState(PLACING);
-  const commentPlaced = () => setCreatingCommentState(PLACED);
+  const commentCreated = () => setState(COMPLETED);
+  const commentPlacing = () => setState(PLACING);
+  const commentPlaced = () => setState(PLACED);
 
-  const isCompleted = useMemo(
-    () => creatingCommentState === COMPLETED,
-    [creatingCommentState],
-  );
-  const isPlacing = useMemo(
-    () => creatingCommentState === PLACING,
-    [creatingCommentState],
-  );
-  const isPlaced = useMemo(
-    () => creatingCommentState === PLACED,
-    [creatingCommentState],
-  );
+  const isCompleted = useMemo(() => state === COMPLETED, [state]);
+  const isPlacing = useMemo(() => state === PLACING, [state]);
+  const isPlaced = useMemo(() => state === PLACED, [state]);
 
   return {
     isCompleted,
