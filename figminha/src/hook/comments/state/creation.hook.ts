@@ -18,6 +18,7 @@ export const useCommentCreationState = () => {
   const isPlaced = useMemo(() => state === PLACED, [state]);
 
   return {
+    state,
     isCompleted,
     isPlacing,
     isPlaced,

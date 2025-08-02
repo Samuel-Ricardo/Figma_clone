@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/style/class.lib';
 import { Content, Portal } from '@radix-ui/react-context-menu';
 import { forwardRef } from 'react';
 
