@@ -1,10 +1,13 @@
 import { useComposerClick } from '@/hook/mouse/click/composer.hook';
 import { useCommentCreationState } from '../../state/creation.hook';
 import { useComposerStore } from '@/store/composer/composer.store';
+import { usePointerStore } from '@/store/pointer/pointer.store';
 
 export const useComposerHandler = () => {
   const { commentCreated, commentPlaced } = useCommentCreationState();
-  const { setCoordinates } = useComposerStore();
+  const { setCoordinates, allowComposer, setAllowComposer } =
+    useComposerStore();
+  const { setLastEvent } = usePointerStore();
 
   const { isClickInsideComposer } = useComposerClick();
 
@@ -19,7 +22,17 @@ export const useComposerHandler = () => {
     setCoordinates({ x, y });
   };
 
+  const allowComposerUse = (event: PointerEvent) => {
+    if (allowComposer) return;
+
+    (event as any)._saveComposedPath = event.composedPath();
+
+    setLastEvent(event);
+    setAllowComposer(true);
+  };
+
   return {
+    allowComposerUse,
     closeComposer,
     placeComposer,
   };
