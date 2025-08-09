@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/style/class.lib';
 import { Content } from '@radix-ui/react-tooltip';
 import { forwardRef } from 'react';
 
