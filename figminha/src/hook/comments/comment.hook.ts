@@ -1,16 +1,9 @@
-import {
-  COMPLETED,
-  PLACED,
-  PLACING
-  CreationCommentState,
-} from '@/@types/comment/state/creation.type';
 import { useCallback } from 'react';
 import { useCommentCreationState } from './state/creation.hook';
 import { useComposerHandler } from './thread/composer/handler.hook';
 
 export const useComments = () => {
-
-  const {isPlaced} = useCommentCreationState();
+  const { isPlaced } = useCommentCreationState();
   const { closeComposer, placeComposer } = useComposerHandler();
 
   const handleNewCommentClick = useCallback(
@@ -23,6 +16,5 @@ export const useComments = () => {
     [isPlaced, closeComposer, placeComposer],
   );
 
-  return {handleNewCommentClick}
+  return { handleNewCommentClick };
 };
-
