@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useMemo } from 'react';
 
 export interface IShapesMenuOptionsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   key: any;
   item: ActiveElement;
 }

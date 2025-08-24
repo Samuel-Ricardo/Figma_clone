@@ -6,7 +6,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
 } from '@radix-ui/react-dropdown-menu';
-import { Button } from '../../ui/button/button.component';
 import { ShapesMenuIcon } from './icon/icon.component';
 import { ShapesMenuItemOptions } from './options/options.component';
 
