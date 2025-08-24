@@ -31,4 +31,17 @@ export const useComposerForm = () => {
     const { top, left } = overlayPanel.getBoundingClientRect();
     return { x: coordinates.x - left, y: coordinates.y - top };
   }, [coordinates.x, coordinates.y]);
+
+  const submit = useCallback(
+    ({ body }: ComposerSubmitComment, event: FormEvent<HTMLFormElement>) => {
+      stopFormSubmission(event);
+      if (!isReadyToSubmit()) return;
+
+      newThread({ composer: { body }, position: getRelativeCoordinates() });
+      resetComposerState();
+    },
+    [getRelativeCoordinates, isReadyToSubmit, newThread, resetComposerState],
+  );
+
+  return { submit };
 };
