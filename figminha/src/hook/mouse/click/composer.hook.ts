@@ -11,6 +11,7 @@ export const useComposerClick = () => {
       );
 
   const savePointerEvent = (event: PointerEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (event as any)._savedComposedPath = event?.composedPath();
 
     setLastEvent(event);
