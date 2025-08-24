@@ -23,4 +23,12 @@ export const useComposerForm = () => {
     () => Boolean(coordinates && lastPointerEvent && getCanvasElement()),
     [coordinates, lastPointerEvent],
   );
+
+  const getRelativeCoordinates = useCallback((): IPosition => {
+    const overlayPanel = getCanvasElement();
+    if (!overlayPanel) return { x: 0, y: 0 };
+
+    const { top, left } = overlayPanel.getBoundingClientRect();
+    return { x: coordinates.x - left, y: coordinates.y - top };
+  }, [coordinates.x, coordinates.y]);
 };
