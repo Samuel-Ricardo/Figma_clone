@@ -25,13 +25,21 @@ export const useComposerHandler = () => {
   const allowComposerUse = (event: PointerEvent) => {
     if (allowComposer) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (event as any)._saveComposedPath = event.composedPath();
 
     setLastEvent(event);
     setAllowComposer(true);
   };
 
+  const resetComposerState = () => {
+    setCoordinates({ x: 0, y: 0 });
+    setAllowComposer(false);
+    commentCreated();
+  };
+
   return {
+    resetComposerState,
     allowComposerUse,
     closeComposer,
     placeComposer,
