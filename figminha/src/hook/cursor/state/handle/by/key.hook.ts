@@ -5,8 +5,9 @@ import { useMyPresence } from '@liveblocks/react';
 //TODO: Improve - SRP (Single Responsibility Principle)
 export const useCursorStateHandleByKey = ({
   message,
+  cursor,
 }: ICursorStateHandleByKey) => {
-  const { setChatState, setHiddenState, setReactionSelectorState } =
+  const { setChatState, setHiddenState, setReactionSelectorState, setCommentState } =
     useCursorState();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, updateMyPresence] = useMyPresence();
@@ -32,11 +33,19 @@ export const useCursorStateHandleByKey = ({
       case 'e':
         setReactionSelectorState();
         break;
+
+      case 'c':
+      case 'C':
+        if (cursor) {
+          setCommentState(cursor.x, cursor.y);
+        }
+        break;
     }
   };
 
   const handleWindowKeyDown = (e: KeyboardEvent) => {
     if (e.key === '/') e.preventDefault();
+    if (e.key === 'c' || e.key === 'C') e.preventDefault();
   };
 
   const setupWindowKeyListeners = () => {

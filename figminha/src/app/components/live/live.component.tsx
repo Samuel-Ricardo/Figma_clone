@@ -4,14 +4,13 @@ import { useOthers } from '@liveblocks/react';
 import { LiveCursors } from './cursor/cursor.component';
 import { useCursorPositionHandler } from '@/hook/cursor/state/handle/move.hook';
 import { CursorChat } from '../chat/cursor.component';
+import { CommentSystem } from '../comment/system.component';
 import { useCursorStateHandleByKey } from '@/hook/cursor/state/handle/by/key.hook';
 import { useEffect } from 'react';
 
 export const Live = () => {
   const others = useOthers();
-  const { setupWindowKeyListeners, removeWindowKeyListeners } =
-    useCursorStateHandleByKey({ message: null });
-
+  
   const {
     cursor,
     onPointerDown,
@@ -20,6 +19,9 @@ export const Live = () => {
     onPointerLeave,
     onPointerEnter,
   } = useCursorPositionHandler();
+
+  const { setupWindowKeyListeners, removeWindowKeyListeners } =
+    useCursorStateHandleByKey({ message: null, cursor });
 
   useEffect(() => {
     setupWindowKeyListeners();
@@ -38,6 +40,8 @@ export const Live = () => {
       <h1 className="text-2xl text-white">Hello World</h1>
 
       {cursor && <CursorChat cursor={cursor} />}
+
+      <CommentSystem />
 
       <LiveCursors others={others} />
     </div>
