@@ -1,0 +1,12 @@
+@import '../../../globals.scss';
+
+.shapes-menu--content {
+  @apply flex;
+  @apply flex-col;
+  @apply mt-5;
+  @apply py-4;
+  @apply gap-y-1;
+  @apply border-none;
+  @apply bg-primary-black;
+  @apply text-white;
+}

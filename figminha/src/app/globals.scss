@@ -11,6 +11,8 @@ body {
 .app-root-container {
   @apply bg-background;
   @apply cursor-none;
+  @apply h-screen;
+  @apply overflow-hidden;
 }
 
 @layer base {
@@ -20,4 +22,9 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+#main-section--container {
+  @apply flex flex-row;
+  @apply h-full;
 }

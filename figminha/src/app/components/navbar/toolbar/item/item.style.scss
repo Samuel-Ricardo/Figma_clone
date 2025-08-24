@@ -1,0 +1,11 @@
+@import '../../../../globals.scss';
+
+#navbar--container ul {
+  li {
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply px-2.5;
+    @apply py-5;
+  }
+}

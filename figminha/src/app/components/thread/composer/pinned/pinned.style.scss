@@ -1,0 +1,39 @@
+@import '../../../../global.scss';
+
+.pinned-composer--container {
+  @apply absolute;
+  @apply flex;
+  @apply gap-4;
+
+  .pinned-composer--avatar {
+    @apply select-none;
+    @apply relative;
+    @apply w-9;
+    @apply h-9;
+    @apply shadow;
+    @apply rounded-tl-md;
+    @apply rounded-tr-full;
+    @apply rounded-br-full;
+    @apply rounded-bl-full;
+    @apply bg-white;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+
+    img {
+      @apply rounded-full;
+    }
+  }
+
+  .pinned-composer--content {
+    @apply shadow;
+    @apply bg-white;
+    @apply rounded-lg;
+    @apply flex;
+    @apply flex-col;
+    @apply text-sm;
+    @apply min-w-96;
+    @apply overflow-hidden;
+    @apply p-2;
+  }
+}

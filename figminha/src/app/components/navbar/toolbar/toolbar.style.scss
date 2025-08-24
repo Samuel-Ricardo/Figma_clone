@@ -4,13 +4,5 @@
   ul {
     @apply flex;
     @apply flex-row;
-
-    li {
-      @apply flex;
-      @apply justify-center;
-      @apply items-center;
-      @apply px-2.5;
-      @apply py-5;
-    }
   }
 }

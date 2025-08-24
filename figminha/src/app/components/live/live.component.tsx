@@ -14,14 +14,22 @@ import { REACTION, REACTION_SELECTOR } from '@/@types/props/cursor/mode.type';
 import { ReactionSelector } from '../reaction/selector/selector.component';
 import { Cursor } from '../cursor/cursor.component';
 import { useReactionStartup } from '@/hook/reaction/startup.hook';
+import { ContextMenu } from '../context/menu/menu.component';
+import { ContextMenuTrigger } from '../context/menu/trigger/trigger.component';
+import { useCanvasStore } from '@/store/canvas/canvas.store';
+import { Shortcuts } from './shortcuts/shortcuts.component';
+import { useSetupCanvas } from '@/hook/canvas/setup.hook';
 
 export const Live = () => {
+  useSetupCanvas();
+
   const others = useOthers();
   const { setupWindowKeyListeners, removeWindowKeyListeners } =
     useCursorStateHandleByKey({ message: null });
 
   const { reactions } = useReactionState();
   const { state } = useCursorState();
+  const { canvasRef } = useCanvasStore();
 
   const { handlePointerLeave, handlePointerMove, handlePointerEnter } =
     useCursorPointerHandler();
@@ -35,34 +43,43 @@ export const Live = () => {
 
   useReactionStartup();
   return (
-    <div
-      className="bg-transparent h-[100vh] w-full flex justify-center items-center text-center border-5 border-green-500"
-      onPointerEnter={handlePointerEnter}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-    >
-      <h1 className="text-2xl text-black italic">Hello World</h1>
+    <ContextMenu>
+      <ContextMenuTrigger
+        id="canvas"
+        style={{
+          cursor: `none`,
+          //          cursor: state.mode === CHAT ? 'none' : 'auto',
+        }}
+        className="relative flex h-full w-full flex-1 items-center justify-center"
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
+        {cursor && (
+          <Cursor color="black" position={{ x: cursor.x, y: cursor.y }} />
+        )}
 
-      {cursor && (
-        <Cursor color="black" position={{ x: cursor.x, y: cursor.y }} />
-      )}
+        <canvas id="canvas-board" ref={canvasRef} />
 
-      {reactions.map(reaction => (
-        <FloatingReaction
-          key={reaction.timestamp}
-          reaction={reaction.reaction}
-          timestamp={reaction.timestamp}
-          positition={reaction.position}
-        />
-      ))}
+        {reactions.map(reaction => (
+          <FloatingReaction
+            key={reaction.timestamp}
+            reaction={reaction.reaction}
+            timestamp={reaction.timestamp}
+            positition={reaction.position}
+          />
+        ))}
 
-      {cursor && <CursorChat cursor={cursor} />}
+        {cursor && <CursorChat cursor={cursor} />}
 
-      {(state.mode === REACTION_SELECTOR || state.mode === REACTION) &&
-        cursor && <ReactionSelector />}
+        {(state.mode === REACTION_SELECTOR || state.mode === REACTION) &&
+          cursor && <ReactionSelector />}
 
-      <LiveCursors others={others} />
-    </div>
+        <LiveCursors others={others} />
+      </ContextMenuTrigger>
+
+      <Shortcuts />
+    </ContextMenu>
   );
 };
 
