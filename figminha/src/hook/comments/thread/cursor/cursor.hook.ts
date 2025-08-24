@@ -6,6 +6,13 @@ export const useNewThreadCursor = () => {
   const getCanvasRect = () =>
     document.getElementById('canvas')?.getBoundingClientRect();
 
+  const isCursorOutsideCanvas = (e: MouseEvent, rect?: DOMRect) =>
+    rect &&
+    (e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom);
+
   const updatePosition = (e: MouseEvent) => {
     if (isCursorOutsideCanvas(e, getCanvasRect())) return resetCursor();
 
