@@ -20,9 +20,10 @@ declare global {
     UserMeta: {
       id: string;
       info: {
-        // Example properties, for useSelf, useUser, useOthers, etc.
-        // name: string;
-        // avatar: string;
+        // User properties for comments and mentions
+        name: string;
+        avatar?: string;
+        color?: string;
       };
     };
 
@@ -34,9 +35,15 @@ declare global {
 
     // Custom metadata set on threads, for useThreads, useCreateThread, etc.
     ThreadMetadata: {
-      // Example, attaching coordinates to a thread
-      // x: number;
-      // y: number;
+      // Coordinates where the comment was created
+      x: number;
+      y: number;
+      // ID of the element this comment is attached to (null for document-level comments)
+      elementId?: string;
+      // Type of comment: document-level or element-specific
+      type: 'document' | 'element';
+      // Thread resolution state
+      resolved: boolean;
     };
 
     // Custom room info set with resolveRoomsInfo, for useRoomInfo

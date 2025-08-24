@@ -3,9 +3,11 @@ export enum CursorMode {
   CHAT,
   REACTION_SELECTOR,
   REACTION,
+  COMMENT,
 }
 
 export const HIDDEN = CursorMode.HIDDEN;
 export const CHAT = CursorMode.CHAT;
 export const REACTION_SELECTOR = CursorMode.REACTION_SELECTOR;
 export const REACTION = CursorMode.REACTION;
+export const COMMENT = CursorMode.COMMENT;

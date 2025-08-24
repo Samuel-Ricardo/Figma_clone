@@ -9,4 +9,5 @@ export interface ICursorStateStore {
   setHiddenState: () => void;
   setPressed(state: boolean): void;
   setReactionSelectorState(): void;
+  setCommentState(x: number, y: number, elementId?: string): void;
 }

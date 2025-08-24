@@ -16,4 +16,10 @@ export type ICursorState =
       mode: CursorMode.REACTION;
       reaction: string;
       isPressed: boolean;
+    }
+  | {
+      mode: CursorMode.COMMENT;
+      x: number;
+      y: number;
+      elementId?: string;
     };
