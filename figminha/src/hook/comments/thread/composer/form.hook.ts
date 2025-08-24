@@ -18,4 +18,9 @@ export const useComposerForm = () => {
   };
 
   const getCanvasElement = () => document.querySelector('#canvas');
+
+  const isReadyToSubmit = useCallback(
+    () => Boolean(coordinates && lastPointerEvent && getCanvasElement()),
+    [coordinates, lastPointerEvent],
+  );
 };
