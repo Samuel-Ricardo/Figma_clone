@@ -16,4 +16,6 @@ export const useComposerForm = () => {
     event.preventDefault();
     event.stopPropagation();
   };
+
+  const getCanvasElement = () => document.querySelector('#canvas');
 };
